@@ -7,11 +7,11 @@ sidebar_position: 1
 
 ## Scope
 
-Batch **Human Assurance** verification through Connect: upload CSV to **`ToProve`**, Prove calls [`POST /v3/verify`](https://developer.prove.com/reference/verify) with **`verificationType`: `humanAssurance`**, and enrolls rows that pass the [Global Fraud Policy](https://developer.prove.com/reference/global-fraud-policy-3-1) in Identity Manager.
+Batch **Human Assurance** verification through Connect: upload CSV to **`ToProve`**, Prove calls `POST /v3/verify` with **`verificationType`: `humanAssurance`**, and enrolls rows that pass the Global Fraud Policy in Identity Manager.
 
-For realtime request and response semantics, see [Human Assurance Verify](https://developer.prove.com/how-to/human-assurance-verify). For continuous monitoring after enrollment, see [Human Assurance Manage](https://developer.prove.com/how-to/human-assurance-manage). For the Verified User batch contract, see [Verified User Connect](https://developer.prove.com/reference/verified-users-connect).
+For realtime request and response semantics, see Human Assurance Verify. For continuous monitoring after enrollment, see Human Assurance Manage. For the Verified User batch contract, see Verified User Connect.
 
-Connect is the Prove Platform **batch verification** interface. Customers upload CSV files over **SFTP**. Connect verifies each valid row with **[`POST /v3/verify`](https://developer.prove.com/reference/verify)**. Connect enrolls rows that pass the **[Global Fraud Policy](https://developer.prove.com/reference/global-fraud-policy-3-1)** in **Identity Manager**. Output columns align with synchronous verify responses. Interpret **`Authentication Result`**, **`Risk Result`**, and assurance fields using the [Global Fraud Policy](https://developer.prove.com/reference/global-fraud-policy-3-1) and your product verify guide.
+Connect is the Prove Platform **batch verification** interface. Customers upload CSV files over **SFTP**. Connect verifies each valid row with **`POST /v3/verify`**. Connect enrolls rows that pass the **Global Fraud Policy** in **Identity Manager**. Output columns align with synchronous verify responses. Interpret **`Authentication Result`**, **`Risk Result`**, and assurance fields using the Global Fraud Policy and your product verify guide.
 
 :::info
 Connect supports **`verifiedUser`** and **`humanAssurance`**.
@@ -22,8 +22,8 @@ Connect supports **`verifiedUser`** and **`humanAssurance`**.
 | Item | Specification |
 |------|----------------|
 | Transport | SFTP to dedicated directories, `ToProve` / `FromProve` |
-| Verification | [`POST /v3/verify`](https://developer.prove.com/reference/verify) per valid detail row |
-| Enrollment | Rows that pass the [Global Fraud Policy](https://developer.prove.com/reference/global-fraud-policy-3-1) enrolled in Identity Manager |
+| Verification | `POST /v3/verify` per valid detail row |
+| Enrollment | Rows that pass the Global Fraud Policy enrolled in Identity Manager |
 | Result shape | Verify response fields mapped to output CSV columns, [see output file format](#output-file-format) |
 
 ## Provisioning
@@ -73,8 +73,8 @@ sequenceDiagram
 | Upload | Place your CSV in the provisioned **`ToProve`** directory via SFTP. |
 | File validation | Prove validates file structure, header **Enroll Key**, header **Verification Type**, trailer record count, and naming convention. Failures reject the **entire file**. Prove writes a rejection artifact to **`FromProve`**. |
 | Row validation | Prove checks each detail row for required fields, phone format and country code, and region consistency with the file **`region`**. Invalid rows go to a separate [error file](#error-file-format). |
-| Verification | Prove sends rows to **[`POST /v3/verify`](https://developer.prove.com/reference/verify)**. Response fields align with the live API. |
-| Enrollment | Prove enrolls rows that pass the [Global Fraud Policy](https://developer.prove.com/reference/global-fraud-policy-3-1) in Identity Manager. |
+| Verification | Prove sends rows to **`POST /v3/verify`**. Response fields align with the live API. |
+| Enrollment | Prove enrolls rows that pass the Global Fraud Policy in Identity Manager. |
 | Delivery | When processing completes, Prove sends an **email** notification when configured. The output file is available under **`FromProve`**. |
 
 ### File-level rejection
@@ -212,7 +212,7 @@ Appended columns follow the input columns for that row, then:
 | Authentication Result | `pass` | From `evaluation.authentication.result` when present |
 | Risk Result | `pass` | From `evaluation.risk.result` when present |
 
-Row-level verify failures still appear in the output file with **`Authentication Result`** / **`Risk Result`** and assurance fields populated from the verify response. See [Global Fraud Policy](https://developer.prove.com/reference/global-fraud-policy-3-1) for failure reason codes.
+Row-level verify failures still appear in the output file with **`Authentication Result`** / **`Risk Result`** and assurance fields populated from the verify response. See Global Fraud Policy for failure reason codes.
 
 :::info
 Prove only includes the top-level identity in the output.

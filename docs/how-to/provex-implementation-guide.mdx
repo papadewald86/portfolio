@@ -13,25 +13,25 @@ Use this guide to integrate **ProveX** after you have a consumer **`proveId`**: 
 ## Prerequisites
 
 - **Consumer consent**: Obtain consent from the consumer as required for your use case and applicable law.
-- **SDK and credentials**: Configure Sandbox OAuth before calling Prove APIs. See [Set up Prove SDKs in your project](./dev-environment-sdk-setup) and [`POST /token`](https://developer.prove.com/reference/authentication).
-- **Bearer token**: Use the same access token for **`/v3/verify`**, [`GET /v3/discover`](https://developer.prove.com/reference/discover-request), and [`GET /v3/fetch`](https://developer.prove.com/reference/fetch-request).
-- **`proveId`**: Complete verification or authentication that returns **`proveId`**. For Sandbox ProveX testing, follow [Verified User Verify](https://developer.prove.com/how-to/verified-users-verify) with `verificationType: verifiedUser` and the [test users](https://developer.prove.com/how-to/verified-users-verify#test-users) on that page.
+- **SDK and credentials**: Configure Sandbox OAuth before calling Prove APIs. See [Set up Prove SDKs in your project](./dev-environment-sdk-setup) and `POST /token`.
+- **Bearer token**: Use the same access token for **`/v3/verify`**, `GET /v3/discover`, and `GET /v3/fetch`.
+- **`proveId`**: Complete verification or authentication that returns **`proveId`**. For Sandbox ProveX testing, follow Verified User Verify with `verificationType: verifiedUser` and the test users on that page.
 
 ## Flow overview
 
 ProveX follows **verify → discover → fetch**. **`/v3/discover`** lists which **`attributeId`** values and issuers exist for the **`proveId`**. **`/v3/fetch`** returns **`attributeValue`** for the attributes the consumer chose. Call **discover before fetch** so you only request attributes that exist.
 
-For how ProveX fits into your product, see [ProveX overview](https://developer.prove.com/explanation/provex-overview).
+For how ProveX fits into your product, see ProveX overview.
 
 ### 1. Authenticate and verify the consumer
 
-Run authentication and/or verification for the end user and persist **`proveId`** from a successful response. In Sandbox, use [Verified User Verify](https://developer.prove.com/how-to/verified-users-verify) with **`verificationType: verifiedUser`** before calling discover or fetch.
+Run authentication and/or verification for the end user and persist **`proveId`** from a successful response. In Sandbox, use Verified User Verify with **`verificationType: verifiedUser`** before calling discover or fetch.
 
 You are ready for ProveX when you have a **`proveId`** and bearer token from the same session.
 
 ### 2. Call /discover
 
-Call [`GET /v3/discover`](https://developer.prove.com/reference/discover-request) with the consumer's **`proveId`** to list marketplace attribute UUIDs and issuer names, and to confirm whether partner-linked data exists. Call this before **`/fetch`** so you know which vendor options are in scope. Use the same bearer token in the **`Authorization`** header.
+Call `GET /v3/discover` with the consumer's **`proveId`** to list marketplace attribute UUIDs and issuer names, and to confirm whether partner-linked data exists. Call this before **`/fetch`** so you know which vendor options are in scope. Use the same bearer token in the **`Authorization`** header.
 
 ```bash title="Request"
 curl -X GET "https://platform.uat.proveapis.com/v3/discover?proveId=550e8400-e29b-41d4-a716-446655440001" \
@@ -49,11 +49,11 @@ curl -X GET "https://platform.uat.proveapis.com/v3/discover?proveId=550e8400-e29
 }
 ```
 
-See [`GET /v3/discover`](https://developer.prove.com/reference/discover-request) for query parameters and the full response schema.
+See `GET /v3/discover` for query parameters and the full response schema.
 
 ### 3. Call /fetch
 
-After **`/discover`**, call [`GET /v3/fetch`](https://developer.prove.com/reference/fetch-request) with the same **`proveId`** and the **`attributeId`** values the consumer chose from the **`/discover`** results. Each item in **`results`** includes **`attributeValue`**. Use the same bearer token as for **`/verify`** and **`/discover`**.
+After **`/discover`**, call `GET /v3/fetch` with the same **`proveId`** and the **`attributeId`** values the consumer chose from the **`/discover`** results. Each item in **`results`** includes **`attributeValue`**. Use the same bearer token as for **`/verify`** and **`/discover`**.
 
 ```bash title="Request"
 curl -X GET "https://platform.uat.proveapis.com/v3/fetch?proveId=550e8400-e29b-41d4-a716-446655440001&attributeId=550e8400-e29b-41d4-a716-446655440100" \
@@ -76,7 +76,7 @@ curl -X GET "https://platform.uat.proveapis.com/v3/fetch?proveId=550e8400-e29b-4
 After a successful **`/fetch`** response, take **`attributeValue`** from the result and **input it into your partner integration**. Pass this to the partner SDK, API, or account flow so the consumer can continue in that marketplace.
 :::
 
-See [`GET /v3/fetch`](https://developer.prove.com/reference/fetch-request) for query parameters and the full response schema.
+See `GET /v3/fetch` for query parameters and the full response schema.
 
 ## Sandbox testing
 
@@ -100,9 +100,9 @@ Prove's Sandbox environment requires the following testing sequence: **`/v3/veri
 
 Use test user Elena Coldman to verify a successful ProveX flow.
 
-Complete [**`/v3/verify` for Elena**](https://developer.prove.com/how-to/verified-users-verify#test-users) first. Use the returned **`proveId`** and the same bearer token for discover and fetch.
+Complete **`/v3/verify` for Elena** first. Use the returned **`proveId`** and the same bearer token for discover and fetch.
 
-* **`proveId`:** From a successful [**`/v3/verify`** for Elena](https://developer.prove.com/how-to/verified-users-verify#test-users).
+* **`proveId`:** From a successful **`/v3/verify`** for Elena.
 * **Bearer token:** Keep the same access token you used for **`/v3/verify`**.
 
 **Call /discover**
@@ -149,7 +149,7 @@ curl -X GET "https://platform.uat.proveapis.com/v3/fetch?proveId=550e8400-e29b-4
 </TabItem>
 <TabItem value="alf" label="Alf">
 
-[Use test user Alf Novotni to simulate a failed verification](https://developer.prove.com/how-to/verified-users-verify#test-users). **`/v3/verify`** returns **`success: false`** and doesn't return a **`proveId`**, so you can't call **`/discover`** or **`/fetch`**. Don't show marketplace options until verification succeeds and you have a **`proveId`**.
+Use test user Alf Novotni to simulate a failed verification. **`/v3/verify`** returns **`success: false`** and doesn't return a **`proveId`**, so you can't call **`/discover`** or **`/fetch`**. Don't show marketplace options until verification succeeds and you have a **`proveId`**.
 
 </TabItem>
 </Tabs>
@@ -165,7 +165,7 @@ curl -X GET "https://platform.uat.proveapis.com/v3/fetch?proveId=550e8400-e29b-4
 
 | Symptom | Likely cause | Recovery |
 | --- | --- | --- |
-| `401 Unauthorized` on discover or fetch | Invalid or expired bearer token | Request a fresh token from [`POST /token`](https://developer.prove.com/reference/authentication). Use the same token you used for **`/v3/verify`**. |
+| `401 Unauthorized` on discover or fetch | Invalid or expired bearer token | Request a fresh token from `POST /token`. Use the same token you used for **`/v3/verify`**. |
 | Empty **`results`** on **`/discover`** | No partner-linked attributes for this **`proveId`** | Don't call **`/fetch`**. Adjust UX since no marketplace options are available for this identity. |
 | **`/fetch`** fails or returns empty **`results`** | **`attributeId`** not from **`/discover`**, or wrong **`proveId`** | Pass **`attributeId`** values exactly as returned by **`/discover`** for the same **`proveId`**. |
 | Can't call discover or fetch after verify | Verify failed or didn't return **`proveId`** (for example Alf Novotni in Sandbox) | Branch on **`success`** from **`/v3/verify`**. Don't call ProveX APIs without a **`proveId`**. |

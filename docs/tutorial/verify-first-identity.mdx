@@ -5,7 +5,7 @@ description: Run a complete identity verification end to end in Sandbox with POS
 sidebar_position: 2
 ---
 
-This tutorial takes you from a Sandbox bearer token to your first completed identity verification. You call [`POST /v3/verify`](https://developer.prove.com/reference/verify) for **Human Assurance**, read a passing result, then trigger a failing result and read the reasons. By the end you can interpret the fields that decide whether to **allow**, **step up**, or **block** a user.
+This tutorial takes you from a Sandbox bearer token to your first completed identity verification. You call `POST /v3/verify` for **Human Assurance**, read a passing result, then trigger a failing result and read the reasons. By the end you can interpret the fields that decide whether to **allow**, **step up**, or **block** a user.
 
 This tutorial uses **Human Assurance**, a server-only flow that needs no client SDK, so you can complete every step with cURL. For the wider product set, see [What's next](#whats-next).
 
@@ -16,13 +16,13 @@ Human Assurance is available only in the **United States**.
 ## What you learn
 
 - Exchange Sandbox credentials for a bearer token
-- Send a verification request to [`POST /v3/verify`](https://developer.prove.com/reference/verify) with a Sandbox test user
+- Send a verification request to `POST /v3/verify` with a Sandbox test user
 - Read `success`, `identity.assuranceLevel`, and `evaluation` to understand a passing result
 - Trigger a failing result and map its failure reasons
 
 ## Prerequisites
 
-- **Human Assurance Sandbox credentials**: An OAuth **client ID** and **client secret** for a Human Assurance project in the [Developer Portal](https://portal.prove.com).
+- **Human Assurance Sandbox credentials**: An OAuth **client ID** and **client secret** for a Human Assurance project in the Developer Portal.
 - **A bearer token**: This guide recaps the token step. For the full walkthrough, complete [Get started with Prove API authentication](./access-api-keys) first.
 - **An HTTP client**: A terminal with **cURL**, or a client such as Postman, to run the requests.
 
@@ -93,7 +93,7 @@ Read these fields in order:
 
 - **`success`**: The top-level pass or fail. Branch your UX and backend logic on this value.
 - **`identity.assuranceLevel`**: Your confidence signal for human-versus-automation policy.
-- **`evaluation`**: The authentication and risk outcomes. Interpret them with the [Global Fraud Policy](https://developer.prove.com/reference/global-fraud-policy-3-1). For Human Assurance, weigh both `authentication` and `risk` when you tune thresholds.
+- **`evaluation`**: The authentication and risk outcomes. Interpret them with the Global Fraud Policy. For Human Assurance, weigh both `authentication` and `risk` when you tune thresholds.
 - **`proveId`**: A stable identifier for the verified identity. Persist it when you need support, auditing, or linking to other Prove flows.
 
 :::tip[Checkpoint]
@@ -144,7 +144,7 @@ The failing response carries `failureReasons` codes you map to a policy action.
 }
 ```
 
-Read `evaluation.authentication.failureReasons` and `evaluation.risk.failureReasons`, then map each code with the [Global Fraud Policy](https://developer.prove.com/reference/global-fraud-policy-3-1). A low `assuranceLevel` such as `AL-1` signals a failed human-presence read.
+Read `evaluation.authentication.failureReasons` and `evaluation.risk.failureReasons`, then map each code with the Global Fraud Policy. A low `assuranceLevel` such as `AL-1` signals a failed human-presence read.
 
 :::tip[Checkpoint]
 You receive **HTTP 200** with `"success": "false"` and at least one code under `failureReasons`.
@@ -152,11 +152,11 @@ You receive **HTTP 200** with `"success": "false"` and at least one code under `
 
 ## Summary
 
-You ran a complete identity verification end to end. You exchanged Sandbox credentials for a bearer token, called [`POST /v3/verify`](https://developer.prove.com/reference/verify) for Human Assurance, read a passing result, and mapped the reasons behind a failing result. You now know which fields drive an allow, step-up, or block decision.
+You ran a complete identity verification end to end. You exchanged Sandbox credentials for a bearer token, called `POST /v3/verify` for Human Assurance, read a passing result, and mapped the reasons behind a failing result. You now know which fields drive an allow, step-up, or block decision.
 
 ## What's next
 
 - **Move into your codebase**: Install a Prove server SDK and wire in your Sandbox credentials with [Set up Prove SDKs in your project](../how-to/dev-environment-sdk-setup).
-- **Build the production flow**: Use [Human Assurance Verify](https://developer.prove.com/how-to/human-assurance-verify) for the full request schema, optional identifiers, and a troubleshooting reference.
-- **Keep identities current**: Enroll passing identities in continuous monitoring with [Human Assurance Manage](https://developer.prove.com/how-to/human-assurance-manage).
-- **Explore other products**: Each solution under **Welcome** and **Know** has its own Authenticate and Verify guides, such as [Pre-Fill for Consumers](https://developer.prove.com/explanation/pre-fill-for-consumers-overview), [Account Opening](https://developer.prove.com/explanation/account-opening-overview), and [Unified Authentication](https://developer.prove.com/explanation/unify-flow).
+- **Build the production flow**: Use Human Assurance Verify for the full request schema, optional identifiers, and a troubleshooting reference.
+- **Keep identities current**: Enroll passing identities in continuous monitoring with Human Assurance Manage.
+- **Explore other products**: Each solution under **Welcome** and **Know** has its own Authenticate and Verify guides, such as Pre-Fill for Consumers, Account Opening, and Unified Authentication.

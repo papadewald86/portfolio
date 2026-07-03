@@ -1,6 +1,6 @@
 ---
-title: "Human Assurance Prove Passive Authentication With Customer-Supplied Possession Fallback"
-sidebar_label: "Prove Passive Authentication With Customer-Supplied Possession Fallback"
+title: "Unified Authentication"
+sidebar_label: "Unified Authentication"
 description: Run Prove Mobile Auth and OTP for Human Assurance, branch on UnifyStatus success outcomes, and call UnifyBind when customer-supplied possession fallback passes
 sidebar_position: 2
 ---
@@ -12,20 +12,20 @@ Use this guide to integrate **prove passive authentication with customer-supplie
 
 The client runs **Mobile Auth and OTP**, and your server polls **`POST /v3/unify-status`**. Call **`POST /v3/unify-bind`** only when status is **`possession_required`** and your possession check passes.
 
-For client setup, see [Human Assurance Prove possession web](https://developer.prove.com/how-to/human-assurance-prove-possession-web-sdk), [Android](https://developer.prove.com/how-to/human-assurance-prove-possession-android-sdk), or [iOS](https://developer.prove.com/how-to/human-assurance-prove-possession-ios-sdk). For customer-only possession, see [Human Assurance customer-supplied possession with force bind](https://developer.prove.com/how-to/human-assurance-customer-possession). For product context, see [Human Assurance overview](https://developer.prove.com/explanation/human-assurance-overview).
+For client setup, see Human Assurance Prove possession web, Android, or iOS. For customer-only possession, see Human Assurance customer-supplied possession with force bind. For product context, see Human Assurance overview.
 
 :::info
 **Prove passive authentication with customer-supplied possession fallback** requires **both** a **client-side SDK** and these **platform APIs**:
 
-- [`POST /v3/unify`](https://developer.prove.com/reference/unify-request)
-- [`POST /v3/unify-status`](https://developer.prove.com/reference/unify-status-request)
-- [`POST /v3/unify-bind`](https://developer.prove.com/reference/unify-bind-request)
+- `POST /v3/unify`
+- `POST /v3/unify-status`
+- `POST /v3/unify-bind`
 :::
 
 ## Prerequisites
 
 - **SDK and credentials**: Install a Prove server SDK and configure Sandbox OAuth. See [Set up Prove SDKs in your project](./dev-environment-sdk-setup).
-- **Access token**: Obtain a bearer token using Prove OAuth. Use the same token for [`POST /v3/unify`](https://developer.prove.com/reference/unify-request), [`POST /v3/unify-status`](https://developer.prove.com/reference/unify-status-request), and [`POST /v3/unify-bind`](https://developer.prove.com/reference/unify-bind-request).
+- **Access token**: Obtain a bearer token using Prove OAuth. Use the same token for `POST /v3/unify`, `POST /v3/unify-status`, and `POST /v3/unify-bind`.
 - **Server**: Use a Prove server SDK or call those endpoints directly. See the reference pages for full request bodies, optional fields, and responses.
 - **Client SDK**: Install the web, Android, or iOS client SDK for **`Authenticate()`**, Mobile Auth, OTP, and Prove Key handling. Your product **Authenticate** navigation includes the matching **Prove possession** how-to for your channel.
 
@@ -82,7 +82,7 @@ Use the mobile prove-led path, Mobile Auth with OTP fallback in **`ProveAuth.bui
 
 ### 2. Initialize the flow
 
-Send the phone number and **`possessionType=none`** to your back end, then call **`POST /v3/unify`**. See [`POST /v3/unify`](https://developer.prove.com/reference/unify-request) for optional identifiers such as **`clientCustomerId`**, **`clientRequestId`**, and **`checkReputation`**.
+Send the phone number and **`possessionType=none`** to your back end, then call **`POST /v3/unify`**. See `POST /v3/unify` for optional identifiers such as **`clientCustomerId`**, **`clientRequestId`**, and **`checkReputation`**.
 
 <Tabs>
 <TabItem value="go" label="Go">
@@ -365,7 +365,7 @@ var rspUnifyStatus = await sdk.V3.V3UnifyStatusRequestAsync(statusReq);
 - **`success=false`**: Prove-led possession failed. Route to your exception or step-up flow.
 - **`success=possession_required`**: Run your customer-supplied possession check next.
 
-See [`POST /v3/unify-status`](https://developer.prove.com/reference/unify-status-request) for the full schema. Interpret **`evaluation`** using the [Global Fraud Policy](https://developer.prove.com/reference/global-fraud-policy-3-1).
+See `POST /v3/unify-status` for the full schema. Interpret **`evaluation`** using the Global Fraud Policy.
 
 ### 5. Perform your possession check (fallback only)
 
@@ -390,7 +390,7 @@ If the customer **passes**, proceed to **`POST /v3/unify-bind`**. If they **fail
 
 Call **`POST /v3/unify-bind`** only when status was **`possession_required`** and your possession check **passed**. This binds the phone number to the Prove Key for later visits.
 
-Requires **`correlationId`** and **`phoneNumber`**. See [`POST /v3/unify-bind`](https://developer.prove.com/reference/unify-bind-request) for optional fields such as **`clientRequestId`**.
+Requires **`correlationId`** and **`phoneNumber`**. See `POST /v3/unify-bind` for optional fields such as **`clientRequestId`**.
 
 <Tabs>
 <TabItem value="go" label="Go">
@@ -449,7 +449,7 @@ var rspUnifyBind = await sdk.V3.V3UnifyBindRequestAsync(bindReq);
 </TabItem>
 </Tabs>
 
-Return the binding outcome to the client. Interpret **`evaluation`** using the [Global Fraud Policy](https://developer.prove.com/reference/global-fraud-policy-3-1).
+Return the binding outcome to the client. Interpret **`evaluation`** using the Global Fraud Policy.
 
 :::info
 If the phone number on **`POST /v3/unify`** differs from the number on the Prove Key, **`POST /v3/unify-status`** may return **`possession_required`**. Call **`POST /v3/unify-bind`** to rebind the Prove Key to the new number. A Prove Key supports **one** phone number at a time.
@@ -457,7 +457,7 @@ If the phone number on **`POST /v3/unify`** differs from the number on the Prove
 
 ## Key revocation
 
-[`POST /v3/device/revoke`](https://developer.prove.com/reference/revoke-request) deactivates the Prove Key for a device. Pass the **`deviceId`** in the request body with a **`clientRequestId`**.
+`POST /v3/device/revoke` deactivates the Prove Key for a device. Pass the **`deviceId`** in the request body with a **`clientRequestId`**.
 
 :::info
 Track each customer's **`deviceId`** after successful authentication so you can revoke when they sign out, report fraud, or replace a device.
@@ -483,7 +483,7 @@ Migrating from the legacy Mobile Auth SDK to the current Prove Auth SDK? See Pro
 ### Prerequisites
 
 - **Sandbox access**: Prove Sandbox credentials and environment configuration from the Prove Portal.
-- **Access token**: Obtain a bearer token using Prove OAuth for [`POST /v3/unify`](https://developer.prove.com/reference/unify-request), [`POST /v3/unify-status`](https://developer.prove.com/reference/unify-status-request), and [`POST /v3/unify-bind`](https://developer.prove.com/reference/unify-bind-request).
+- **Access token**: Obtain a bearer token using Prove OAuth for `POST /v3/unify`, `POST /v3/unify-status`, and `POST /v3/unify-bind`.
 
 ### Test users list
 
@@ -519,7 +519,7 @@ Inge Galier is a **Mobile Auth pass** case with customer-supplied possession fal
 1. **Prompt customer** — Start the onboarding flow on the initial screen and enter the phone number for Inge Galier.
 2. **Initiate start request** — Your front end sends the possession type to the back end. Your back end calls the /unify endpoint. The response provides an auth token, correlation ID, and `success=pending`.
 3. **Send auth token to the front end** — Your back end sends the `authToken` to the front end. The front end runs Mobile Auth.
-4. **Verify mobile number** — Once the front end finishes the possession check, the back end calls [`POST /v3/unify-status`](https://developer.prove.com/reference/unify-status-request) with the correlation ID to validate the phone number. Expect `success=true`, `proveId`, `deviceId`, and `phoneNumber` from Mobile Auth in Sandbox. See [`POST /v3/unify-status`](https://developer.prove.com/reference/unify-status-request) for the full response.
+4. **Verify mobile number** — Once the front end finishes the possession check, the back end calls `POST /v3/unify-status` with the correlation ID to validate the phone number. Expect `success=true`, `proveId`, `deviceId`, and `phoneNumber` from Mobile Auth in Sandbox. See `POST /v3/unify-status` for the full response.
 
    You have a successful flow and a Prove Key tied to this phone number. Sending this user through again bypasses the possession check due to the Prove Key. Send the user on through your authenticated flow.
 
@@ -531,7 +531,7 @@ Jesse Mashro is a **Mobile Auth fail** case. Use this user to confirm that prove
 1. **Prompt customer** — Start the onboarding flow on the initial screen and enter the phone number for Jesse Mashro.
 2. **Initiate start request** — Your front end sends the phone number and possession type to the back end. Your back end sends the phone number to the /unify endpoint. The response provides an auth token, correlation ID, and `success=pending`.
 3. **Send auth token to the front end** — Your back end sends the `authToken` to the front end. The front end fails Mobile Auth and OTP without prompting.
-4. **Verify mobile number** — Once the front end finishes the possession check, the back end calls [`POST /v3/unify-status`](https://developer.prove.com/reference/unify-status-request) with the correlation ID to validate the phone number. Expect `success=false` and `phoneNumber`. See [`POST /v3/unify-status`](https://developer.prove.com/reference/unify-status-request).
+4. **Verify mobile number** — Once the front end finishes the possession check, the back end calls `POST /v3/unify-status` with the correlation ID to validate the phone number. Expect `success=false` and `phoneNumber`. See `POST /v3/unify-status`.
 
    The test user failed. Send the user through your exception process.
 
@@ -549,7 +549,7 @@ With **`checkReputation=true`** on **`POST /v3/unify`**, Penny fails the reputat
 3. **Send auth token to the front end** — Your back end sends the `authToken` to the front end. The front end attempts Mobile Auth, which fails.
 4. **Verify mobile number** — The back end then calls the /unify-status endpoint with the correlation ID to validate the phone number. The response provides `success=possession_required` reminding you to perform your own possession check.
 5. **Perform your own possession check** — Perform your own possession check outside of Prove's system. If the consumer fails, end the flow. If the consumer passes, then proceed to Bind Prove Key.
-6. **Bind Prove Key** — The back end calls [`POST /v3/unify-bind`](https://developer.prove.com/reference/unify-bind-request) with the correlation ID. Expect `success=true`, `proveId`, and `phoneNumber` in Sandbox. See [`POST /v3/unify-bind`](https://developer.prove.com/reference/unify-bind-request) for the full response.
+6. **Bind Prove Key** — The back end calls `POST /v3/unify-bind` with the correlation ID. Expect `success=true`, `proveId`, and `phoneNumber` in Sandbox. See `POST /v3/unify-bind` for the full response.
 
    You have a successful flow and a Prove Key tied to this phone number. Sending this user through again bypasses the possession check due to the Prove Key. Send the user on through your authenticated flow.
 
@@ -560,7 +560,7 @@ With **`checkReputation=true`** on **`POST /v3/unify`**, Penny fails the reputat
 
 | Symptom | Likely cause | Recovery |
 | --- | --- | --- |
-| `401 Unauthorized` on Unify APIs | Invalid or expired bearer token | Request a fresh token from [`POST /token`](https://developer.prove.com/reference/authentication). |
+| `401 Unauthorized` on Unify APIs | Invalid or expired bearer token | Request a fresh token from `POST /token`. |
 | `401 Unauthorized` when finishing a session | The finishing caller resolves to a different Prove customer than the one that started the session, or the session has expired. | Finish the session with the same credentials that started it. If the session expired, start a new session. |
 | **`success=true`** but bind called anyway | Mobile Auth or Instant Link already completed prove-led possession | Skip **`POST /v3/unify-bind`**. Continue your authenticated flow. |
 | **`success=false`** after prove-led auth | Sandbox user such as Jesse or Wendy, prove-led path failed | Route to exception flow. Don't call bind unless product policy requires a separate retry. |

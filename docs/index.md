@@ -7,7 +7,7 @@ sidebar_label: Overview
 
 # Documentation Samples
 
-The pages in this section are real developer documentation I wrote as a **Technical Product Writer at [Prove](https://www.prove.com/)**, an identity verification and authentication platform. They're pulled directly from Prove's public developer docs at [developer.prove.com](https://developer.prove.com/), lightly reformatted here to fit this site.
+The pages in this section are real developer documentation I wrote as a **Technical Product Writer at [Prove](https://www.prove.com/)**, an identity verification and authentication platform. They're pulled directly from Prove's public developer docs at developer.prove.com, lightly reformatted here to fit this site.
 
 I write for engineers integrating REST APIs, SDKs, and webhook-based flows into their own products, so these samples use real endpoint names, request/response payloads, and Sandbox test data exactly as they ship. Any credentials, tokens, and phone numbers shown are non-production Sandbox values.
 

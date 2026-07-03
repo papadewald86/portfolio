@@ -8,24 +8,24 @@ sidebar_position: 1
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-This tutorial walks through Sandbox **OAuth 2.0 client credentials**: sign in to the Developer Portal, copy Sandbox keys, call [`POST /token`](https://developer.prove.com/reference/token-request-3-1), then send one authenticated request to confirm the bearer token works.
+This tutorial walks through Sandbox **OAuth 2.0 client credentials**: sign in to the Developer Portal, copy Sandbox keys, call `POST /token`, then send one authenticated request to confirm the bearer token works.
 
 ## Get started
 
 **Prerequisites**
 
-- **Portal account**: A registered account on the [Portal](https://portal.prove.com/auth/login).
+- **Portal account**: A registered account on the Portal.
 - **Local tools**: A terminal with **cURL**, or an HTTP client such as Postman, to run the requests in this tutorial.
 
 **What this tutorial covers**
 
 - Open or create a **project** in the Developer Portal and copy Sandbox **client ID** and **client secret**
-- Exchange them for a bearer token with [`POST /token`](https://developer.prove.com/reference/token-request-3-1)
+- Exchange them for a bearer token with `POST /token`
 - Confirm authentication with one Platform API request using `Authorization: Bearer …`
 
 ### 1. Access your Developer Portal account
 
-Sign in to the [Developer Portal](https://portal.prove.com/auth/login).
+Sign in to the Developer Portal.
 
 ### 2. Open or create a project
 
@@ -45,7 +45,7 @@ You have a Sandbox **client ID** and **client secret** ready to paste into cURL.
 
 ### 4. Exchange credentials for a bearer token
 
-Prove Platform APIs use **OAuth 2.0 client credentials**. Send **POST** to [`POST /token`](https://developer.prove.com/reference/token-request-3-1) with `Content-Type: application/x-www-form-urlencoded` and your values in place of the placeholders.
+Prove Platform APIs use **OAuth 2.0 client credentials**. Send **POST** to `POST /token` with `Content-Type: application/x-www-form-urlencoded` and your values in place of the placeholders.
 
 :::warning
 If you are testing outside North America, use the **EU** token host and the **International** credentials from your project: `https://platform.uat.eu.proveapis.com/token`.
@@ -113,14 +113,14 @@ Use the North America host, `platform.uat.proveapis.com`, or EU host, `platform.
 You get **HTTP 200** with a JSON **`success`** field. **HTTP 401** means the bearer token is missing, wrong, or expired. Repeat the token step.
 :::
 
-See [`POST /v3/verify`](https://developer.prove.com/reference/verify) for the full request schema. Use [Human Assurance Verify](https://developer.prove.com/how-to/human-assurance-verify) for full response interpretation.
+See `POST /v3/verify` for the full request schema. Use Human Assurance Verify for full response interpretation.
 
 ## Troubleshooting
 
 | Symptom | Likely cause | What to do |
 | --- | --- | --- |
-| **HTTP 401** on a Platform API | Invalid, missing, or expired bearer token | Repeat [`POST /token`](https://developer.prove.com/reference/token-request-3-1). Paste the new **`access_token`**. |
-| **HTTP 403 Forbidden** | Wrong URL, HTTP method, or `Content-Type` | Don't add **`/v3`** to the token URL. Match the operation reference. See [HTTP 403](https://developer.prove.com/reference/status-and-error-codes-3-1#http-403). |
+| **HTTP 401** on a Platform API | Invalid, missing, or expired bearer token | Repeat `POST /token`. Paste the new **`access_token`**. |
+| **HTTP 403 Forbidden** | Wrong URL, HTTP method, or `Content-Type` | Don't add **`/v3`** to the token URL. Match the operation reference. See HTTP 403. |
 | **HTTP 400** on `/v3/verify` | Malformed JSON or wrong fields | **401** means auth failed. **400** with a JSON body often means auth succeeded but the request needs correction. |
 | Token response missing `access_token` | Wrong client ID/secret or wrong Sandbox region | Confirm **Credentials** tab values and US vs EU host. |
 
