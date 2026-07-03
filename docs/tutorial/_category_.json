@@ -3,6 +3,7 @@
   "position": 1,
   "link": {
     "type": "generated-index",
+    "slug": "/tutorial",
     "description": "Learning-oriented walkthroughs that take a newcomer from zero to a working result."
   }
 }
