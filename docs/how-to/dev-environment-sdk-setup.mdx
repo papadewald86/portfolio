@@ -1,0 +1,228 @@
+---
+title: Set up Prove SDKs in your project
+sidebar_label: SDK setup
+description: Install the Prove server SDK for your language, configure Sandbox OAuth credentials in code, and optionally add the web, Android, or iOS client SDK for possession flows
+sidebar_position: 1
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Use this guide when you already have an app and need **Prove packages** and **Sandbox configuration** in the repo. Complete **server** steps for any backend that calls Prove Platform APIs. Add **one** client tab only if your product runs possession (Prove Key, Mobile Auth, OTP, and so on) in the browser or native app.
+
+## Prerequisites
+
+- **Sandbox credentials**: OAuth **client ID** and **client secret** from the [Developer Portal](https://portal.prove.com) for the project you are integrating.
+- **Tooling**: Language runtime and package manager for your stack, such as Go modules, NPM, Gradle/Maven, .NET CLI, or CocoaPods.
+
+### 1. Install the server-side SDK
+
+Add the Prove server SDK for your language using your normal dependency workflow.
+
+<Tabs>
+<TabItem value="go" label="Go">
+
+From your Go module root, the folder that has `go.mod`:
+
+```shell
+go get github.com/prove-identity/prove-sdk-server-go
+```
+
+Then add this import to your Go source:
+
+```go
+import (
+    provesdkservergo "github.com/prove-identity/prove-sdk-server-go"
+    "github.com/prove-identity/prove-sdk-server-go/models/components"
+)
+```
+
+</TabItem>
+<TabItem value="typescript" label="TypeScript">
+
+From your Node.js project root, the folder that has `package.json`:
+
+```shell
+npm install -S @prove-identity/prove-api
+```
+
+Then add this import to your TypeScript source:
+
+```typescript
+import { Proveapi } from "@prove-identity/prove-api";
+```
+
+</TabItem>
+<TabItem value="java" label="Java">
+
+See the [latest version on Maven Central](https://central.sonatype.com/artifact/com.prove/proveapi).
+
+**Gradle**: add to `build.gradle`:
+
+```groovy
+implementation 'com.prove:proveapi:0.21.7'
+```
+
+**Maven**: add to `pom.xml`:
+
+```xml
+<dependency>
+    <groupId>com.prove</groupId>
+    <artifactId>proveapi</artifactId>
+    <version>0.21.7</version>
+</dependency>
+```
+
+Then add these imports to your Java source:
+
+```java
+import com.prove.proveapi.Proveapi;
+import com.prove.proveapi.models.components.Security;
+```
+
+</TabItem>
+<TabItem value="dotnet" label=".NET">
+
+From your .NET project directory, the folder that has your `.csproj`:
+
+```shell
+dotnet add package Prove.Proveapi --version 1.0.1
+```
+
+Then add these imports to your C# source:
+
+```csharp
+using Prove.Proveapi;
+using Prove.Proveapi.Models.Components;
+```
+
+</TabItem>
+</Tabs>
+
+### 2. Configure Sandbox credentials in code
+
+Initialize the SDK with your Sandbox **client ID** and **client secret** from environment variables or your secrets store.
+
+:::info
+The exact client-initialization snippet for each language lives in Prove's shared snippet library and is kept in sync with SDK releases. See the [live guide](https://developer.prove.com/how-to/dev-environment-3-1) for the current code sample per language.
+:::
+
+:::warning
+Replace `uat-us` with `uat-eu` if you are testing outside North America.
+:::
+
+### 3. Install the client-side SDK — optional
+
+Add a client SDK only when your product runs possession in the browser or native app. Pick **one** of the following tabs.
+
+<Tabs>
+<TabItem value="web" label="Web SDK">
+
+```shell title="NPM (ensure you have the latest version)"
+npm install @prove-identity/prove-auth@3.6.3
+```
+
+```html title="No package manager — include from jsDelivr, or download and host locally"
+<script src="https://cdn.jsdelivr.net/npm/@prove-identity/prove-auth@3.6.3/build/bundle/release/prove-auth.js"></script>
+
+<script src="assets/js/prove-auth-v3.6.3.js"></script>
+```
+
+:::warning
+If you're loading the SDK from the [public CDN](https://www.jsdelivr.com/) and using [Content Security Policy headers](https://content-security-policy.com/), ensure you add `https://cdn.jsdelivr.net/npm/@prove-identity/` to `script-src`, plus corresponding `sha256-...` or `nonce-...`.
+:::
+
+</TabItem>
+<TabItem value="android" label="Android SDK">
+
+Prove hosts Android binaries in a Maven repository for Gradle.
+
+Update the `dependencies` block in `build.gradle`:
+
+```java
+dependencies {
+    // Existing dependencies are here.
+
+    // Add the Prove Link dependencies:
+    implementation 'com.prove.sdk:proveauth:6.12.0'
+}
+```
+
+Point `settings.gradle` at the Prove Maven repository:
+
+```java
+dependencyResolutionManagement {
+    // Existing repository settings are here.
+
+    repositories {
+        // Existing repositories are here.
+
+        // Add the Prove Link Maven repository:
+        maven {
+            url = "https://prove.jfrog.io/artifactory/libs-public-maven/"
+        }
+    }
+}
+```
+
+Add the following to `build.gradle` so dependency libraries resolve:
+
+```java
+dependencies {
+    implementation fileTree('libs')
+}
+```
+
+If you see an error on `application@fullBackupContent`, add this attribute on the opening `<application>` tag in `AndroidManifest.xml`:
+
+```xml
+<application
+...
+tools:replace="android:fullBackupContent"
+...>
+</application>
+```
+
+The SDK merges standard network permissions into your manifest. After sync, confirm they meet your policy.
+
+</TabItem>
+<TabItem value="ios" label="iOS SDK">
+
+Prove hosts iOS artifacts for CocoaPods integration.
+
+Install the `cocoapods-art` plugin:
+
+```shell
+gem install cocoapods-art
+```
+
+Add the Prove pod repository:
+
+```shell
+pod repo-art add prove.jfrog.io https://prove.jfrog.io/artifactory/api/pods/libs-public-cocoapods
+```
+
+In your **Podfile**, add the Prove source and SDK pod:
+
+```ruby title="Podfile"
+plugin 'cocoapods-art', :sources => [
+    'prove.jfrog.io'
+]
+
+pod 'ProveAuth', '6.12.3'
+```
+
+Install pods from your project directory:
+
+```shell
+pod install
+```
+
+</TabItem>
+</Tabs>
+
+## Verify your setup
+
+- **Server**: Project restores or builds with the new dependency; imports resolve with no version conflicts.
+- **Credentials**: At runtime, the client ID and secret your code reads match the **Sandbox** credentials from the Developer Portal for the intended region, `uat-us` vs `uat-eu`.
+- **Client, if installed**: Package or pods install completes; for native apps, open the project in Xcode or Android Studio and confirm your project links the Prove modules.

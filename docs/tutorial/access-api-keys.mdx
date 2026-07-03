@@ -1,0 +1,129 @@
+---
+title: Get started with Prove API authentication
+sidebar_label: Access API Keys
+description: Obtain Sandbox credentials from the Developer Portal, request an OAuth 2.0 bearer token, and make your first authenticated Platform API call
+sidebar_position: 1
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+This tutorial walks through Sandbox **OAuth 2.0 client credentials**: sign in to the Developer Portal, copy Sandbox keys, call [`POST /token`](https://developer.prove.com/reference/token-request-3-1), then send one authenticated request to confirm the bearer token works.
+
+## Get started
+
+**Prerequisites**
+
+- **Portal account**: A registered account on the [Portal](https://portal.prove.com/auth/login).
+- **Local tools**: A terminal with **cURL**, or an HTTP client such as Postman, to run the requests in this tutorial.
+
+**What this tutorial covers**
+
+- Open or create a **project** in the Developer Portal and copy Sandbox **client ID** and **client secret**
+- Exchange them for a bearer token with [`POST /token`](https://developer.prove.com/reference/token-request-3-1)
+- Confirm authentication with one Platform API request using `Authorization: Bearer …`
+
+### 1. Access your Developer Portal account
+
+Sign in to the [Developer Portal](https://portal.prove.com/auth/login).
+
+### 2. Open or create a project
+
+Open an existing project or create one: choose the solution that matches your use case, name the project, and select **Create Project**.
+
+:::tip[Checkpoint]
+You are on a project workspace with a **Credentials** tab.
+:::
+
+### 3. Copy Sandbox credentials
+
+Open the **Credentials** tab for your project. Copy the **client ID** and **client secret** for Sandbox.
+
+:::tip[Checkpoint]
+You have a Sandbox **client ID** and **client secret** ready to paste into cURL.
+:::
+
+### 4. Exchange credentials for a bearer token
+
+Prove Platform APIs use **OAuth 2.0 client credentials**. Send **POST** to [`POST /token`](https://developer.prove.com/reference/token-request-3-1) with `Content-Type: application/x-www-form-urlencoded` and your values in place of the placeholders.
+
+:::warning
+If you are testing outside North America, use the **EU** token host and the **International** credentials from your project: `https://platform.uat.eu.proveapis.com/token`.
+:::
+
+<Tabs>
+<TabItem value="us" label="US Sandbox">
+
+```bash
+curl -X POST https://platform.uat.proveapis.com/token \
+  -H "Content-Type: application/x-www-form-urlencoded" \
+  -d "grant_type=client_credentials&client_id=YOUR_CLIENT_ID&client_secret=YOUR_CLIENT_SECRET"
+```
+
+</TabItem>
+<TabItem value="eu" label="EU Sandbox">
+
+```bash
+curl -X POST https://platform.uat.eu.proveapis.com/token \
+  -H "Content-Type: application/x-www-form-urlencoded" \
+  -d "grant_type=client_credentials&client_id=YOUR_CLIENT_ID&client_secret=YOUR_CLIENT_SECRET"
+```
+
+</TabItem>
+</Tabs>
+
+```json title="Example token response"
+{
+  "access_token": "eyJ...",
+  "refresh_token": "eyJ...",
+  "refresh_expires_in": 3600,
+  "token_type": "Bearer",
+  "expires_in": 3600
+}
+```
+
+Access tokens from `POST /token` are valid for **1 hour**. Request a new token when it expires.
+
+For Platform API calls, use the **`access_token`** value as a **Bearer** token. You can ignore **`refresh_token`** for this client-credentials flow unless your integration explicitly uses refresh.
+
+:::tip[Checkpoint]
+You receive **HTTP 200** with `"token_type": "Bearer"` and a non-empty **`access_token`**.
+:::
+
+### 5. Confirm the bearer token on a Platform API
+
+Call a v3.1 verify endpoint with your token. This proves Sandbox authentication works before you integrate an SDK.
+
+Replace `YOUR_ACCESS_TOKEN` with the **`access_token`** in the token response.
+
+```bash
+curl -X POST "https://platform.uat.proveapis.com/v3/verify" \
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "verificationType": "humanAssurance",
+    "phoneNumber": "2001004051",
+    "clientRequestId": "tutorial-001"
+  }'
+```
+
+Use the North America host, `platform.uat.proveapis.com`, or EU host, `platform.uat.eu.proveapis.com`, to match your token request.
+
+:::tip[Checkpoint]
+You get **HTTP 200** with a JSON **`success`** field. **HTTP 401** means the bearer token is missing, wrong, or expired. Repeat the token step.
+:::
+
+See [`POST /v3/verify`](https://developer.prove.com/reference/verify) for the full request schema. Use [Human Assurance Verify](https://developer.prove.com/how-to/human-assurance-verify) for full response interpretation.
+
+## Troubleshooting
+
+| Symptom | Likely cause | What to do |
+| --- | --- | --- |
+| **HTTP 401** on a Platform API | Invalid, missing, or expired bearer token | Repeat [`POST /token`](https://developer.prove.com/reference/token-request-3-1). Paste the new **`access_token`**. |
+| **HTTP 403 Forbidden** | Wrong URL, HTTP method, or `Content-Type` | Don't add **`/v3`** to the token URL. Match the operation reference. See [HTTP 403](https://developer.prove.com/reference/status-and-error-codes-3-1#http-403). |
+| **HTTP 400** on `/v3/verify` | Malformed JSON or wrong fields | **401** means auth failed. **400** with a JSON body often means auth succeeded but the request needs correction. |
+| Token response missing `access_token` | Wrong client ID/secret or wrong Sandbox region | Confirm **Credentials** tab values and US vs EU host. |
+
+## Next steps
+
+Now that Sandbox authentication works, run a verification end to end in [Verify your first identity](./verify-first-identity): call `POST /v3/verify`, read a passing result, then trigger and interpret a failing one.

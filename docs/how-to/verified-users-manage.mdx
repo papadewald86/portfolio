@@ -1,0 +1,149 @@
+---
+title: Verified User Manage
+sidebar_label: Manage
+description: Register an Identity Manager webhook in the Portal, verify JWT-signed deliveries, and process phone and identity change notifications for Verified User enrollments
+sidebar_position: 3
+---
+
+Use this guide to receive Identity Manager webhooks for Verified User: register an HTTPS endpoint in the Prove Portal, verify JWT-signed deliveries, and process phone and identity change notifications.
+
+:::info
+Webhook events are available in the **US** only.
+:::
+
+After [Verified Users Verify](https://developer.prove.com/how-to/verified-users-verify) or [Verified User Connect](https://developer.prove.com/reference/verified-users-connect) enrolls an identity that meets the [Global Fraud Policy](https://developer.prove.com/reference/global-fraud-policy-3-1), Prove sends webhook notifications when the enrolled phone or identity changes. Flow: **verify** → **enrollment** → continuous monitoring → **webhook** on phone/identity change.
+
+## Prerequisites
+
+- **Public HTTPS URL**: Prove must be able to `POST` to your endpoint from the internet. Configure the URL in the [Prove Portal](https://portal.prove.com).
+- **Portal access**: Sign-in to the [Prove Portal](https://portal.prove.com/en/login) with permission to create or open an **Identity Manager** project.
+- **Enrolled identities**: Manage applies only after Prove enrolls an identity in Identity Manager—typically when [`POST /v3/verify`](https://developer.prove.com/reference/verify) returns `success: true` with `isEnrolled: true` under the [Global Fraud Policy](https://developer.prove.com/reference/global-fraud-policy-3-1), or after a successful Unified Authentication session that meets the same policy. Your product **Verify** or **server SDK** guide covers enrollment; batch flows use **Connect** where your product supports it.
+- **One webhook per Portal project**: Register the listener on the **Identity Manager** project that receives enrollments from your Prove API credentials. The same endpoint receives notifications for every identity enrolled through that project.
+- **JWT verification**: Your service can validate **HS256** using the **shared secret** from the Portal before you accept webhook JSON.
+- **Delivery expectations**: Prove emits events as it detects changes; delivery is **best-effort** and failed deliveries are re-queued for up to **3 delivery attempts**. Design your endpoint to respond and return a **2xx** status when you accept a delivery.
+- **No retroactive history**: Events that occurred **before** you saved the webhook configuration aren't sent later.
+- **Per-identity stream**: After certain outcomes such as **disconnect**, **moved out of coverage**, or some **phone number change**, Prove may send **no further** notifications for that identity. You must **re-verify** and re-enroll an updated number if the customer supplies one.
+
+## Register the endpoint in the Portal
+
+### 1. Sign in to the Prove Portal
+
+Open the [Prove Portal](https://portal.prove.com/en/login) and authenticate.
+
+### 2. Create or open an Identity Manager project
+
+Go to **Projects**. Create a project and choose **Prove Identity Manager**, or open an existing Identity Manager project.
+
+### 3. Open webhook settings
+
+In the project, open the **Configure** tab. Set the environment to **Sandbox** or **Production**, then open **Webhook settings** for that environment.
+
+:::tip
+For a throwaway test URL, use [Webhook.site](https://webhook.site/) to mint a unique HTTPS endpoint.
+:::
+
+### 4. Paste your webhook URL and save
+
+Enter your **HTTPS** listener URL in the webhook field, then use **Save and Test Webhook** so Prove persists the configuration and issues a **test** `POST` to your endpoint.
+
+### 5. Verify the JWT on every delivery
+
+For each request, treat the body as **untrusted** until the JWT checks pass.
+
+1. Read **`Authorization`** from the **`X-Prove-Authorization`** header, `Bearer <jwt>`.
+2. Verify the JWT with **HS256** and the **shared secret** shown in the Portal under **Configure** → **Webhook settings** for the active environment.
+3. Validate standard time claims like `iat`, `nbf`, and `exp`. Allow about **±60 seconds** clock skew. Reject tokens past **`exp`**. Prove uses about **5 minutes** of validity from issuance.
+4. Confirm **`iss`** equals the literal string **`Prove Identity`**.
+5. **Replay protection**: Reject any **`jti`** you have already accepted within your replay window. Each delivery uses a **new** UUID **`jti`**.
+6. **Integrity**: Compute **SHA-256** over the **raw request body bytes** before JSON parsing. Compare a **constant-time** hex string equality against the **`body_hash`** claim inside the JWT payload. If it fails, reject the request.
+
+Prove also sends **`X-Correlation-ID`** on each try—log it for support and tracing.
+
+Example decoded payload from the middle segment of the JWT:
+
+```json title="Example JWT payload"
+{
+  "iss": "Prove Identity",
+  "iat": 1710864000,
+  "nbf": 1710864000,
+  "exp": 1710864300,
+  "jti": "7c9e6679-7425-40de-944b-e07fc1f90ae7",
+  "body_hash": "8af324cfdeb52d549a2504f7ba20ea51950ee4593ce6182d2b1cea927e41944d"
+}
+```
+
+```javascript title="Node.js (verify before parsing JSON)"
+import crypto from 'node:crypto';
+import jwt from 'jsonwebtoken';
+
+// Wrong: JSON.parse(req.body) before hashing changes bytes and breaks body_hash.
+const rawBody = req.rawBody; // capture raw bytes in middleware
+const token = req.headers['x-prove-authorization']?.replace(/^Bearer\s+/i, '');
+const payload = jwt.verify(token, portalSharedSecret, {
+  algorithms: ['HS256'],
+  issuer: 'Prove Identity',
+});
+
+const hash = crypto.createHash('sha256').update(rawBody).digest('hex');
+if (!crypto.timingSafeEqual(Buffer.from(hash), Buffer.from(payload.body_hash))) {
+  return res.status(401).end();
+}
+const body = JSON.parse(rawBody.toString('utf8'));
+```
+
+### 6. Parse and handle the JSON body
+
+After JWT and **`body_hash`** succeed, parse the JSON. Expect a top-level **`notifications`** array. Prove may send **up to 100** objects per call, and batches can be smaller.
+
+Handle each element using the following fields. Optional keys such as **`newCarrier`** or **`newLineType`** appear only for some event types.
+
+| Field | Use |
+|-------|-----|
+| `eventId` | Store for idempotency and support references. |
+| `event` | Human-readable description. |
+| `eventType` | Branch logic. Values include `PHONE_NUMBER_CHANGE`, `DISCONNECT`, `PORT`, `LINE_TYPE_CHANGE`, `MOVED_OUT_OF_COVERAGE`. |
+| `eventTimestamp` | ISO 8601 time from Prove. |
+| `clientCustomerId` | Your customer key, if supplied on enrollment. |
+| `proveId` | Prove identifier for the enrolled identity. |
+
+Branch on **`eventType`** in your policy engine. Treat **`DISCONNECT`** and **`MOVED_OUT_OF_COVERAGE`** as loss of a reliable phone signal. Treat **`PHONE_NUMBER_CHANGE`** and **`PORT`** as triggers for step-up or re-verification. Use **`LINE_TYPE_CHANGE`** when mobile versus landline affects your risk rules.
+
+```json title="Example payload"
+{
+  "notifications": [
+    {
+      "eventId": "c3702333-ddd0-4aad-8f8f-c2813c1dd253",
+      "event": "phone number change detected",
+      "eventType": "PHONE_NUMBER_CHANGE",
+      "eventTimestamp": "2025-01-23T10:11:12Z",
+      "clientCustomerId": "c3702333-ddd0-4aad-8f8f-c2813c1dd253",
+      "proveId": "81d3829a-7207-4fd7-9a78-2dbf33fd54ad"
+    }
+  ]
+}
+```
+
+### 7. Confirm the integration
+
+- Trigger **Save and Test Webhook** and confirm your handler receives a **test** request, returns **2xx**, and passes JWT + **`body_hash`** checks.
+- Force an **invalid** signature or body tamper in a dev environment and confirm your service **rejects** the call.
+- In Sandbox, exercise at least one real notification path you plan to support and confirm your persistence and idempotency logic behave as expected.
+
+## Stop monitoring an identity
+
+Use the following endpoints when you must stop webhook notifications for a specific enrolled identity. Use the **`proveId`** as the **`identityId`** path parameter on these calls:
+
+- [`POST /v3/identity/{identityId}/deactivate`](https://developer.prove.com/reference/identity-manager-deactivate-identity) stops webhook notifications without removing the identity.
+- [`DELETE /v3/identity/{identityId}`](https://developer.prove.com/reference/identity-manager-delete-identity) disenrolls the identity from Identity Manager. To receive notifications for that identity again later, you must re-enroll it.
+
+## Common failures
+
+| Symptom | Likely cause | Recovery |
+| --- | --- | --- |
+| No webhook deliveries | URL not saved, endpoint not reachable, or identity not enrolled | Run **Save and Test Webhook** in the Portal. Confirm enrollment returned `isEnrolled: true` under the [Global Fraud Policy](https://developer.prove.com/reference/global-fraud-policy-3-1). |
+| Test webhook works but live events don't | Webhook configured only in **Sandbox** | Register the URL under **Configure** for the environment where verify or auth runs. |
+| JWT signature invalid | Wrong shared secret or wrong Portal project | Copy the secret from the same Identity Manager project that receives enrollments. |
+| `body_hash` mismatch | Body parsed or re-serialized before hashing | Hash the **raw request body bytes** before JSON parsing. Compare in constant time to the JWT claim. |
+| Duplicate notifications | Retries or batched deliveries | Treat **`eventId`** as idempotent. Track **`jti`** within your replay window. |
+| Events stop for one customer | **Disconnect**, **moved out of coverage**, or some **phone number change** events | Prove may end the notification stream for that identity. **Re-verify** and re-enroll if the customer supplies an updated number. |
+| Deliveries stop after a few tries | Handler returned non-**2xx** | Return **2xx** after you accept a verified payload. Prove re-queues failed deliveries up to **3** attempts. |
