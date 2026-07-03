@@ -73,6 +73,20 @@ Taking complex technical concepts and making them accessible to diverse audience
 ### The Goodyear Tire & Rubber Company
 **Electrical Engineer** | *06/2009 - 06/2011*
 
+## 💬 Recommendations
+
+> I had the pleasure of working with Nick at CheckAlt, where he consistently demonstrated professionalism, adaptability, and a collaborative approach to every project. He worked effectively across product, engineering, and other cross-functional teams, communicated clearly, and did an excellent job balancing changing priorities while continuing to deliver high-quality work on time. Nick is dependable, easy to work with, and someone who genuinely helps move projects forward. I'd gladly work with him again and highly recommend him to any organization looking for a strong technical writer and collaborative teammate.
+>
+> — **Zach Grumet**, Senior Product Manager, Fintech & SaaS Platforms — worked with Nicholas on the same team at CheckAlt
+
+> I hired Nicholas at Prove and quickly came to rely on him as the backbone of our developer documentation. He led our REST API guides and reference content with clarity and precision, consistently turning complex technical concepts into developer-friendly material that improved integration quality.
+>
+> Nicholas worked seamlessly across engineering, product, and security, ensuring our docs stayed accurate and aligned with fast-moving architecture decisions. He was dependable, proactive, and delivered high-quality work even under tight timelines. Any team needing a technical writer who brings ownership, cross-functional collaboration, and exceptional clarity would be lucky to have him.
+>
+> — **Leandro Margulis**, Product Executive — hired and directly managed Nicholas at Prove
+
+More recommendations are available on [LinkedIn](https://www.linkedin.com/in/nicholasadewald/).
+
 ## ✍️ Published Writing
 
 Selected posts I wrote for [Prove's blog](https://www.prove.com/blog), covering identity verification, developer experience, and application security.
