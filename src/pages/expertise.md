@@ -73,6 +73,20 @@ Taking complex technical concepts and making them accessible to diverse audience
 ### The Goodyear Tire & Rubber Company
 **Electrical Engineer** | *06/2009 - 06/2011*
 
+## ✍️ Published Writing
+
+Selected posts I wrote for [Prove's blog](https://www.prove.com/blog), covering identity verification, developer experience, and application security.
+
+- **[Beyond the OTP: Why SMS-Based 2FA Is Failing and What Comes Next](https://www.prove.com/blog/error-handling)** — Makes the case for moving beyond SMS one-time passcodes toward device-bound cryptographic authentication.
+- **[Anatomy of an Account Takeover Attack: Analysis and Response Plan](https://www.prove.com/blog/account-takeover-attack)** — Breaks down how account takeover attacks unfold and a four-pillar verification framework to defend against them.
+- **[How Prove is Revolutionizing Developer Tools for Identity Verification](https://www.prove.com/blog/revolutionizing-developer-tools)** — Covers how accessible APIs, documentation, and sandbox environments lower the barrier to integrating identity verification.
+- **[Faster Onboarding with Prove's Angular/Java Starter Kit](https://www.prove.com/blog/angular-java-starter-kit)** — A step-by-step starter kit walkthrough for integrating Pre-Fill with an Angular frontend and Spring Boot backend.
+- **[Integrating the Prove Pre-Fill® Solution: A Step-by-Step Guide for Developers](https://www.prove.com/blog/integrating-identity-verification-solution)** — Walks developers through backend and frontend integration, testing, and optimization for Pre-Fill.
+- **[How to Streamline User Onboarding with Prove's Developer Portal](https://www.prove.com/blog/how-to-streamline-user-onboarding-with-prove-developer-portal)** — Shows how the Developer Portal's tools and sandbox environments speed up integration without sacrificing UX.
+- **[Top 5 Mistakes When Implementing Identity Verification](https://www.prove.com/blog/top-5-mistakes-when-implementing-identity-verification)** — Five common integration pitfalls, from poor error handling to skipped monitoring, and how to avoid them.
+- **[Prove Pre-Fill®: Simplifying Identity Verification for Faster App Integrations](https://www.prove.com/blog/prove-pre-fill-simplifying-identity-verification-for-faster-app-integrations)** — Explains how Pre-Fill auto-populates verified user data from a phone number to cut onboarding friction.
+- **[Top 5 API Best Practices for Identity Verification Solutions](https://www.prove.com/blog/top-5-api-best-practices-for-identity-verification-solutions)** — Best practices for securing, scaling, and error-handling identity verification API integrations.
+
 #### Contact Me
 
 <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', margin: '15px 0' }}>
