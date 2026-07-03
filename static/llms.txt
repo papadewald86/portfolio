@@ -1,0 +1,33 @@
+# Nicholas DeWald — Technical Writer Portfolio
+
+> Portfolio of Nicholas DeWald, a technical writer specializing in developer documentation, REST API references, docs-as-code systems, and AI-ready documentation. Includes real documentation samples written for Prove's public developer docs, organized by the Diátaxis framework, plus professional experience and published blog writing.
+
+Nicholas is a Technical Product Writer at Prove (identity verification and authentication), with 13 years of prior engineering experience. He writes documentation for two audiences: human developers and AI coding agents, applying the AI Agent Spec and AI-ready documentation standards.
+
+Contact: nad6df@gmail.com · LinkedIn: https://www.linkedin.com/in/nicholasadewald/ · GitHub: https://github.com/papadewald86
+
+## Pages
+
+- [About Me](https://papadewald86.github.io/portfolio/): Who Nicholas is, what he does, and his skills and tools
+- [Expertise](https://papadewald86.github.io/portfolio/expertise): Professional experience, recommendations, and published blog writing
+- [Documentation Samples overview](https://papadewald86.github.io/portfolio/docs/): How the samples are organized and where they come from
+
+## Documentation Samples
+
+Real developer documentation written for Prove's public developer docs, organized by Diátaxis type.
+
+### Tutorials
+
+- [Get started with Prove API authentication](https://papadewald86.github.io/portfolio/docs/tutorial/access-api-keys): OAuth 2.0 client credentials, bearer tokens, and a first authenticated API call
+- [Verify your first identity](https://papadewald86.github.io/portfolio/docs/tutorial/verify-first-identity): End-to-end identity verification in Sandbox with passing and failing results
+
+### How-to Guides
+
+- [Set up Prove SDKs in your project](https://papadewald86.github.io/portfolio/docs/how-to/dev-environment-sdk-setup): Server and client SDK installation across Go, TypeScript, Java, .NET, web, Android, and iOS
+- [Unified Authentication](https://papadewald86.github.io/portfolio/docs/how-to/human-assurance-prove-passive-auth): Passive authentication with customer-supplied possession fallback, including Mermaid flow diagrams and multi-language code samples
+- [Verified User Manage](https://papadewald86.github.io/portfolio/docs/how-to/verified-users-manage): Webhook registration, JWT verification, and identity change notifications
+- [Implement ProveX](https://papadewald86.github.io/portfolio/docs/how-to/provex-implementation-guide): Discover and fetch marketplace attributes with Sandbox testing steps
+
+### Reference
+
+- [Human Assurance Connect](https://papadewald86.github.io/portfolio/docs/reference/human-assurance-connect): Batch verification over SFTP — CSV file formats, validation error codes, and output fields

@@ -7,7 +7,7 @@ import type * as Preset from '@docusaurus/preset-classic';
 const config: Config = {
   title: 'Nicholas DeWald',
   tagline: 'Technical Writer',
-  favicon: 'img/favicon.ico',
+  favicon: 'img/favicon.png',
 
   future: {
     v4: true, // Improve compatibility with the upcoming Docusaurus v4
@@ -53,7 +53,19 @@ const config: Config = {
   ],
 
   themeConfig: {
-    image: 'img/docusaurus-social-card.jpg',
+    image: 'img/social-card.png',
+    metadata: [
+      {
+        name: 'description',
+        content:
+          'Nicholas DeWald — technical writer specializing in developer documentation, REST API references, docs-as-code systems, and AI-ready documentation.',
+      },
+      {
+        name: 'keywords',
+        content:
+          'technical writer, developer documentation, API documentation, docs-as-code, AI-ready documentation',
+      },
+    ],
     colorMode: {
       defaultMode: 'dark',
       disableSwitch: false,
