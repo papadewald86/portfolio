@@ -77,6 +77,9 @@ Taking complex technical concepts and making them accessible to diverse audience
 
 **Missouri University of Science and Technology** | *2004 - 2009*
 
+* BS, Electrical Engineering
+* BS, Computer Engineering
+
 **Certifications:**
 
 * AI Technical Writing Certification — Technical Writer HQ, 2024
