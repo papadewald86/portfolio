@@ -10,6 +10,7 @@ Technical writer and documentation leader specializing in developer-focused cont
 
 ## Skills
 
+- **Domain:** APIs & SDKs, identity verification & authentication, OAuth 2.0, webhooks
 - **Documentation:** Developer documentation, REST API reference and guides, AI-ready documentation, docs-as-code systems, content strategy, Diátaxis framework
 - **Tools:** Markdown/MDX, Git, OpenAPI, Mintlify, Doc Detective, EkLine, Promptless, AI Agent Spec, HotJar, SharePoint
 - **Practices:** Docs testing in CI, SME interviews, content architecture, developer experience (DX) research, SEO
