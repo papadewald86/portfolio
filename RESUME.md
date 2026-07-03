@@ -1,6 +1,6 @@
 # Nicholas DeWald
 
-**Technical Writer** — Readable for humans. Precise for machines.
+**Technical Writer**
 
 📧 nad6df@gmail.com · 💼 [LinkedIn](https://www.linkedin.com/in/nicholasadewald/) · 🐙 [GitHub](https://github.com/papadewald86) · 🌐 [Portfolio](https://papadewald86.github.io/portfolio/)
 
@@ -49,7 +49,7 @@ Technical writer and documentation leader specializing in developer-focused cont
 
 ### Earlier Engineering Experience
 
-- **QSPEC Solutions, Inc.** — Senior Project Engineer (2018 – 2019): produced bidding documents, contract conditions, and 20+ pages of compliance testing documentation for pharmaceutical clients.
+- **QSPEC Solutions, Inc.** — Senior Project Engineer (2018 – 2019)
 - **EN Engineering** — Project Engineer (2016 – 2018)
 - **Burns & McDonnell** — Controls Engineer (2013 – 2016)
 - **Honeywell Process Solutions** — System Engineer I (2011 – 2013)
@@ -67,9 +67,3 @@ Technical writer and documentation leader specializing in developer-focused cont
 - AI Technical Writing Certification — Technical Writer HQ, 2024
 - Knowledge Management Certification — Technical Writer HQ, 2024
 - Technical Writing Certification — Technical Writer HQ, 2022
-
-## Writing Samples
-
-- **Documentation samples** (tutorials, how-to guides, reference): [papadewald86.github.io/portfolio/docs](https://papadewald86.github.io/portfolio/docs/)
-- **Case study — making developer docs AI-ready**: [papadewald86.github.io/portfolio/how-i-work](https://papadewald86.github.io/portfolio/how-i-work)
-- **Published blog writing**: [papadewald86.github.io/portfolio/expertise](https://papadewald86.github.io/portfolio/expertise#%EF%B8%8F-published-writing)
