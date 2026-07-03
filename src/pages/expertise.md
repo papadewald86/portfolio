@@ -73,6 +73,16 @@ Taking complex technical concepts and making them accessible to diverse audience
 ### The Goodyear Tire & Rubber Company
 **Electrical Engineer** | *06/2009 - 06/2011*
 
+## 🎓 Education & Certifications
+
+**Missouri University of Science and Technology** | *2004 - 2009*
+
+**Certifications:**
+
+* AI Technical Writing Certification — Technical Writer HQ, 2024
+* Knowledge Management Certification — Technical Writer HQ, 2024
+* Technical Writing Certification — Technical Writer HQ, 2022
+
 ## 💬 Recommendations
 
 > I had the pleasure of working with Nick at CheckAlt, where he consistently demonstrated professionalism, adaptability, and a collaborative approach to every project. He worked effectively across product, engineering, and other cross-functional teams, communicated clearly, and did an excellent job balancing changing priorities while continuing to deliver high-quality work on time. Nick is dependable, easy to work with, and someone who genuinely helps move projects forward. I'd gladly work with him again and highly recommend him to any organization looking for a strong technical writer and collaborative teammate.

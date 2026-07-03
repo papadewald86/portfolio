@@ -6,7 +6,7 @@ import type * as Preset from '@docusaurus/preset-classic';
 
 const config: Config = {
   title: 'Nicholas DeWald',
-  tagline: 'Technical Writer',
+  tagline: 'Technical Writer — readable for humans, precise for machines',
   favicon: 'img/favicon.png',
 
   future: {
