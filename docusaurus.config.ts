@@ -86,6 +86,11 @@ const config: Config = {
           position: 'left',
         },
         {
+          to: '/how-i-work',
+          label: 'How I Work',
+          position: 'left',
+        },
+        {
           type: 'docSidebar',
           sidebarId: 'portfolioSidebar',
           position: 'left',
