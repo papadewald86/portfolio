@@ -16,6 +16,10 @@ Contact: nad6df@gmail.com · LinkedIn: https://www.linkedin.com/in/nicholasadewa
 
 Real developer documentation written for Prove's public developer docs, organized by Diátaxis type.
 
+### Explanation
+
+- [Secure API credentials](https://papadewald86.github.io/portfolio/docs/explanation/secure-api-credentials): Principles for protecting client IDs, client secrets, and bearer tokens in development and production
+
 ### Tutorials
 
 - [Get started with Prove API authentication](https://papadewald86.github.io/portfolio/docs/tutorial/access-api-keys): OAuth 2.0 client credentials, bearer tokens, and a first authenticated API call

@@ -13,6 +13,7 @@ I write for engineers integrating REST APIs, SDKs, and webhook-based flows into 
 
 The docs follow the **[Diátaxis framework](https://diataxis.fr/)**, and this section is organized the same way:
 
+- **[Explanation](./explanation)** — conceptual and background docs that clarify concepts and tradeoffs.
 - **[Tutorials](./tutorial)** — learning-oriented walkthroughs that take a newcomer from zero to a working result.
 - **[How-to Guides](./how-to)** — task-oriented guides for solving a specific integration problem.
 - **[Reference](./reference)** — information-oriented lookup material: fields, file formats, and error codes.

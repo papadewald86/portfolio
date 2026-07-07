@@ -1,0 +1,9 @@
+{
+  "label": "Explanation",
+  "position": 1,
+  "link": {
+    "type": "generated-index",
+    "slug": "/explanation",
+    "description": "Conceptual and background docs that clarify concepts and tradeoffs."
+  }
+}
