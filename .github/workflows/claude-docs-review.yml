@@ -40,4 +40,4 @@ jobs:
 
             Post a PR review comment summarizing what passes and what needs
             fixing. Be specific about file names and line numbers.
-          claude_args: "--max-turns 5"
+          claude_args: "--max-turns 15"
