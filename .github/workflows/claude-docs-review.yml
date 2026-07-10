@@ -44,7 +44,9 @@ jobs:
             5. Code samples in the diff are complete and runnable, not
                placeholders.
 
-            Post one PR comment (via `gh pr comment`) summarizing what passes
-            and what needs fixing, citing file names and line numbers. Keep
-            the review to the diff only — be concise and move quickly.
+            Leave your findings as a comment on this pull request summarizing
+            what passes and what needs fixing, citing file names and line
+            numbers. Keep the review to the diff only — be concise and move
+            quickly. Do not attempt to post the comment yourself via the gh
+            CLI or git commands — use your normal comment/review capability.
           claude_args: "--max-turns 20"
