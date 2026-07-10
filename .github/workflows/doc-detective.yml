@@ -1,0 +1,19 @@
+name: doc-detective
+
+on:
+  pull_request:
+    paths:
+      - "docs/**"
+      - ".doc-detective.json"
+
+jobs:
+  runTests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: doc-detective/github-action@v1
+        with:
+          version: latest
+          config: .doc-detective.json
+          input: ./docs
+          exit_on_fail: true
