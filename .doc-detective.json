@@ -1,0 +1,7 @@
+{
+  "input": "docs",
+  "fileTypes": [
+    "markdown"
+  ],
+  "detectSteps": false
+}

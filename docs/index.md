@@ -19,3 +19,8 @@ The docs follow the **[Diátaxis framework](https://diataxis.fr/)**, and this se
 - **[Reference](./reference)** — information-oriented lookup material: fields, file formats, and error codes.
 
 They're also built docs-as-code: written in MDX, versioned in Git, and shipped through the same pipeline as the product they document.
+
+{/* test { "testId": "docs-index-links" } */}
+{/* step { "checkLink": "https://www.prove.com/" } */}
+{/* step { "checkLink": "https://diataxis.fr/" } */}
+{/* test end */}

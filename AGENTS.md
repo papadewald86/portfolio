@@ -32,6 +32,10 @@ sidebar_position: <Number>
 - Code samples should be complete enough to run, not pseudocode.
 - Internal links must resolve — verify the target page exists before linking to it.
 
+## Doc Detective tests
+
+External links referenced in `docs/` pages are validated by [Doc Detective](https://doc-detective.com) via inline `<!-- test -->` / `<!-- step -->` comments (see `.doc-detective.json` at the repo root). If a page introduces a new external link or API endpoint reference, add a `checkLink` step for it in the same page and confirm it passes with `npm run test:docs` before opening a PR. `detectSteps` is set to `false` in the config — only explicit inline tests run, so heading/bold-text auto-detection won't generate false failures.
+
 ## llms.txt
 
 `static/llms.txt` is a hand-written index of every page on this site. Any PR that adds, removes, or renames a page under `docs/` or `src/pages/` must update `static/llms.txt` in the same PR.
@@ -45,3 +49,4 @@ A docs PR is ready to merge when:
 3. `static/llms.txt` reflects any added/removed/renamed pages.
 4. Internal links resolve to real pages.
 5. Code samples are complete and runnable, not placeholders.
+6. New external links or API endpoints have a passing Doc Detective `checkLink` test.
