@@ -25,19 +25,26 @@ jobs:
         with:
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
           prompt: |
-            Review the documentation changes in this PR against the conventions
-            in AGENTS.md at the repo root. Specifically check:
+            Run `git diff origin/${{ github.base_ref }}...HEAD --name-status` to
+            see exactly which files changed in this PR. Only inspect those
+            files (and AGENTS.md at the repo root) — do not explore the rest
+            of the repo.
 
-            1. Each changed or added page under docs/ is in the folder matching
-               its actual Diátaxis type (tutorial, how-to, reference, explanation).
+            Check the changed files against AGENTS.md's conventions:
+
+            1. Pages under docs/ are in the folder matching their Diátaxis
+               type (tutorial, how-to, reference, explanation).
             2. Front matter includes title, sidebar_label, description, and
                sidebar_position.
             3. If a page was added, removed, or renamed under docs/ or
-               src/pages/, confirm static/llms.txt was updated to match.
-            4. Internal links in changed files point to pages that actually
-               exist in this repo.
-            5. Code samples are complete and runnable, not placeholders.
+               src/pages/, static/llms.txt was updated in this same diff.
+            4. Any new internal links in the changed files point to pages
+               that exist in this repo (check with a quick file lookup, not
+               a full repo crawl).
+            5. Code samples in the diff are complete and runnable, not
+               placeholders.
 
-            Post a PR review comment summarizing what passes and what needs
-            fixing. Be specific about file names and line numbers.
-          claude_args: "--max-turns 15"
+            Post one PR comment (via `gh pr comment`) summarizing what passes
+            and what needs fixing, citing file names and line numbers. Keep
+            the review to the diff only — be concise and move quickly.
+          claude_args: "--max-turns 20"
