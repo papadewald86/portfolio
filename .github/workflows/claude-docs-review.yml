@@ -24,6 +24,7 @@ jobs:
       - uses: anthropics/claude-code-action@v1
         with:
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          track_progress: true
           prompt: |
             Run `git diff origin/${{ github.base_ref }}...HEAD --name-status` to
             see exactly which files changed in this PR. Only inspect those
@@ -44,9 +45,7 @@ jobs:
             5. Code samples in the diff are complete and runnable, not
                placeholders.
 
-            Leave your findings as a comment on this pull request summarizing
-            what passes and what needs fixing, citing file names and line
-            numbers. Keep the review to the diff only — be concise and move
-            quickly. Do not attempt to post the comment yourself via the gh
-            CLI or git commands — use your normal comment/review capability.
+            Summarize what passes and what needs fixing, citing file names
+            and line numbers. Keep the review to the diff only — be concise
+            and move quickly.
           claude_args: "--max-turns 20"
