@@ -12,7 +12,7 @@ Technical writer and documentation leader specializing in developer-focused cont
 
 - **Domain:** APIs & SDKs, identity verification & authentication, OAuth 2.0, webhooks
 - **Documentation:** Developer documentation, REST API reference and guides, AI-ready documentation, docs-as-code systems, content strategy, Diátaxis framework
-- **Tools:** Markdown/MDX, Git, OpenAPI, Mintlify, Doc Detective, EkLine, Promptless, AI Agent Spec, HotJar, SharePoint
+- **Tools:** Markdown/MDX, Git, OpenAPI, Mintlify, Bluehawk, Doc Detective, EkLine, Promptless, AI Agent Spec, HotJar, SharePoint
 - **Practices:** Docs testing in CI, SME interviews, content architecture, developer experience (DX) research, SEO
 
 ## Experience
@@ -23,7 +23,7 @@ Technical writer and documentation leader specializing in developer-focused cont
 - Lead end-to-end strategy and execution for developer documentation across REST APIs, SDKs, and integration guides, covering 15+ product lines across identity and API products.
 - Introduced AI-ready documentation standards after diagnosing a high-profile client's stalled AI-agent integration, raising the developer site from 67 to 98/100 on the AI Agent Score and getting the patterns adopted across product teams.
 - Reduced developer onboarding time by 30% through improved API reference design and contextual examples.
-- Built and maintain a docs-as-code pipeline for two developer sites on Mintlify, with Doc Detective inline tests that execute documented API calls, install commands, and links in CI.
+- Built and maintain a docs-as-code pipeline for two developer sites on Mintlify, using Bluehawk to keep code samples in sync with tested source and Doc Detective inline tests to catch broken links and validate documented API calls in CI.
 - Encoded documentation standards as agent-readable conventions (AGENTS.md and authoring skills) so human writers and AI tools produce compliant content by default.
 - Partner with engineering, product, and security teams to keep docs accurate and aligned with release cycles; mentor engineers and product managers on content architecture and developer-centric writing.
 - Implemented HotJar company-wide to identify documentation UX friction points.
