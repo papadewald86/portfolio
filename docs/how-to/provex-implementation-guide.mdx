@@ -171,8 +171,3 @@ Use test user Alf Novotni to simulate a failed verification. **`/v3/verify`** re
 | Can't call discover or fetch after verify | Verify failed or didn't return **`proveId`** (for example Alf Novotni in Sandbox) | Branch on **`success`** from **`/v3/verify`**. Don't call ProveX APIs without a **`proveId`**. |
 | Discover or fetch out of order | **`/fetch`** called before **`/discover`** | Follow verify → discover → fetch. |
 | Wrong Sandbox project credentials | Test users used with credentials from another Prove project | Use Verified User Sandbox credentials with the test users on this page. |
-
-{/* test { "testId": "provex-implementation-guide-links" } */}
-{/* step { "checkLink": { "url": "https://platform.uat.proveapis.com/v3/discover?proveId=550e8400-e29b-41d4-a716-446655440001", "statusCodes": [401] } } */}
-{/* step { "checkLink": { "url": "https://platform.uat.proveapis.com/v3/fetch?proveId=550e8400-e29b-41d4-a716-446655440001&attributeId=550e8400-e29b-41d4-a716-446655440100", "statusCodes": [401] } } */}
-{/* test end */}
