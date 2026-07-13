@@ -82,6 +82,7 @@ Taking complex technical concepts and making them accessible to diverse audience
 
 **Certifications:**
 
+* Certified Scrum Master (CSM) — Scrum Alliance, 2026
 * AI Technical Writing Certification — Technical Writer HQ, 2024
 * Knowledge Management Certification — Technical Writer HQ, 2024
 * Technical Writing Certification — Technical Writer HQ, 2022
