@@ -20,7 +20,7 @@ Technical writer and documentation leader specializing in developer-focused cont
 ### Prove — Technical Product Writer
 *September 2022 – Present*
 
-- Lead end-to-end strategy and execution for developer documentation across REST APIs, SDKs, and integration guides, covering 15+ product lines across identity and API products.
+- Lead end-to-end strategy and execution for developer documentation across REST APIs, SDKs, and integration guides — 15+ product lines and 400+ pages across two developer sites serving 3,000 monthly visitors.
 - Introduced AI-ready documentation standards after diagnosing a high-profile client's stalled AI-agent integration, raising the developer site from 67 to 98/100 on the AI Agent Score and getting the patterns adopted across product teams.
 - Reduced developer onboarding time by 30% through improved API reference design and contextual examples.
 - Built and maintain a docs-as-code pipeline for two developer sites on Mintlify, using Bluehawk to keep code samples in sync with tested source and Doc Detective inline tests to catch broken links and validate documented API calls in CI.
