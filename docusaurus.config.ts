@@ -91,6 +91,11 @@ const config: Config = {
           position: 'left',
         },
         {
+          to: '/job-search-agent',
+          label: 'Projects',
+          position: 'left',
+        },
+        {
           type: 'docSidebar',
           sidebarId: 'portfolioSidebar',
           position: 'left',

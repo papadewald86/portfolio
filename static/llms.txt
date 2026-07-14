@@ -10,6 +10,7 @@ Contact: nad6df@gmail.com · LinkedIn: https://www.linkedin.com/in/nicholasadewa
 
 - [About Me](https://papadewald86.github.io/portfolio/): Who Nicholas is, what he does, and links to his documentation samples and published writing
 - [Expertise](https://papadewald86.github.io/portfolio/expertise): Professional experience, recommendations, and published blog writing
+- [Project: Job-Search Agent](https://papadewald86.github.io/portfolio/job-search-agent): Case study of a scheduled Claude Code routine that verifies job listings against live ATS APIs and scores fit honestly, with a reusable prompt template
 - [Documentation Samples overview](https://papadewald86.github.io/portfolio/docs/): How the samples are organized and where they come from
 
 ## Documentation Samples

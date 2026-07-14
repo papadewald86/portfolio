@@ -17,6 +17,14 @@ We needed documentation that worked equally well for a developer skimming at 2 a
 
 ## What I did
 
+```mermaid
+flowchart LR
+  A["📏 Measure<br/>baseline vs. AI Agent Spec<br/>score: 67/100"] --> B["✍️ Rewrite<br/>for lossy compression"]
+  B --> C["📜 Encode standards<br/>AGENTS.md + authoring skill"]
+  C --> D["✅ Self-test in CI<br/>Doc Detective on every PR"]
+  D -->|"re-measure: 98/100"| A
+```
+
 **Measured first.** I baselined both sites against Dachary Carey's AI Agent Spec to find where agents lost information — which pages compressed badly, which lookups failed, which instructions an agent couldn't execute. We scored 67 out of 100.
 
 **Rewrote for lossy compression.** The core insight: agents don't read pages, they read what's left after summarization. That reshaped concrete writing rules:

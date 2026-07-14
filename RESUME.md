@@ -56,6 +56,21 @@ Technical writer and documentation leader specializing in developer-focused cont
 - **Honeywell Process Solutions** — System Engineer I (2011 – 2013)
 - **The Goodyear Tire & Rubber Company** — Electrical Engineer (2009 – 2011)
 
+## Projects
+
+**AI-Native Documentation Portfolio** — [live site](https://papadewald86.github.io/portfolio/) · [source](https://github.com/papadewald86/portfolio)
+
+- Docs-as-code portfolio built on Docusaurus with GitHub Actions CI/CD, containing real documentation samples organized by the Diátaxis framework.
+- Wired a Claude Code GitHub Action that automatically reviews every documentation pull request against the repo's AGENTS.md conventions — Diátaxis placement, front matter, llms.txt sync — and posts its findings as a PR comment.
+- Doc Detective tests run in CI on every docs PR, executing checks against the external links and endpoints the pages reference so published samples never silently break.
+- Hand-written llms.txt and AGENTS.md make the site indexable and contributable by AI agents — the same AI-ready patterns applied at Prove, demonstrated in public.
+
+**Job-Search Agent — Scheduled Claude Code Routine** — [design write-up](https://papadewald86.github.io/portfolio/job-search-agent)
+
+- Designed a self-contained Claude Code agent that runs on a daily schedule: it searches ATS job boards (Greenhouse, Lever, Ashby) for technical-writing and developer-experience roles, then verifies each listing is still open against the company's live job-board API before reporting — filtering out the stale postings that pollute search indexes.
+- Encoded a structured profile of skills, experience, and known qualification gaps into the agent's instructions so every posting is scored honestly (Strong/Good/Stretch) with gaps named per listing, rather than keyword-matched.
+- Maintains a dedupe ledger across runs and delivers ranked Markdown reports, replacing a daily manual search chore with a reviewable artifact.
+
 ## Education & Certifications
 
 **Missouri University of Science and Technology** (2004 – 2009)
