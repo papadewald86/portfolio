@@ -16,7 +16,7 @@ Taking complex technical concepts and making them accessible to diverse audience
 ### Prove
 **Technical Product Writer** | *09/2022 - Present*
 * Lead end-to-end strategy and execution for developer documentation across REST APIs, SDKs, and integration guides.
-* Document 15+ product lines across identity and API products.
+* Document 15+ product lines across identity and API products — 400+ pages serving 3,000 monthly visitors.
 * Introduced AI-ready documentation standards, achieving a 98/100 AI Agent Score.
 * Built and maintain a docs-as-code pipeline for 2 developer sites with the help of our docs platform, Mintlify.
 * Partner with engineering, product, and customer teams to ensure documentation accuracy and alignment with release cycles.
