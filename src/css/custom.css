@@ -28,3 +28,10 @@
   --ifm-color-primary-lightest: #4fddbf;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
 }
+
+/* Admonition titles: sentence case instead of the default all-caps.
+   !important is required — the theme boosts its own rule's specificity
+   with :not(#id) hacks that a normal selector can't out-rank. */
+.theme-admonition [class*='admonitionHeading'] {
+  text-transform: none !important;
+}

@@ -32,10 +32,14 @@ We needed documentation that worked equally well for a developer skimming at 2 a
 
 ## Results
 
+:::tip[📊 Outcomes]
+
 - **98/100 AI Agent Score** across the developer site
 - **30% reduction in developer onboarding time**, driven by reference redesign and contextual examples
 - AI-ready patterns **adopted by product teams beyond docs**
 - Documentation that ships through the same docs-as-code pipeline as the product, with tests as the safety net
+
+:::
 
 ## What I took away
 

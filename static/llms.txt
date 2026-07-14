@@ -8,7 +8,7 @@ Contact: nad6df@gmail.com · LinkedIn: https://www.linkedin.com/in/nicholasadewa
 
 ## Pages
 
-- [About Me](https://papadewald86.github.io/portfolio/): Who Nicholas is, what he does, and his skills and tools
+- [About Me](https://papadewald86.github.io/portfolio/): Who Nicholas is, what he does, and links to his documentation samples and published writing
 - [Expertise](https://papadewald86.github.io/portfolio/expertise): Professional experience, recommendations, and published blog writing
 - [Documentation Samples overview](https://papadewald86.github.io/portfolio/docs/): How the samples are organized and where they come from
 
