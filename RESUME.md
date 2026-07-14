@@ -6,7 +6,7 @@
 
 ## Summary
 
-Technical writer and documentation leader specializing in developer-focused content, REST API references, and docs-as-code systems, with 13 years of prior engineering experience. Writes documentation for two audiences — human developers and AI coding agents — applying the AI Agent Spec and AI-ready documentation standards. Raised Prove's developer documentation from 67 to 98/100 AI Agent Score and cut developer onboarding time by 30%.
+Technical writer and documentation leader specializing in developer-focused content, REST API references, and docs-as-code systems, with 13 years of prior engineering experience. Writes documentation for two audiences — human developers and AI coding agents — applying the AI Agent Spec and AI-ready documentation standards. Raised Prove's developer documentation from 67 to 98/100 AI Agent Score and cut developer onboarding time by 30%. Maintains a [public portfolio](https://papadewald86.github.io/portfolio/) with live documentation samples, a case study, and CI-tested code examples.
 
 ## Skills
 
