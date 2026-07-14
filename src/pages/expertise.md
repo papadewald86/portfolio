@@ -91,17 +91,17 @@ Taking complex technical concepts and making them accessible to diverse audience
 
 > I had the pleasure of working with Nick at CheckAlt, where he consistently demonstrated professionalism, adaptability, and a collaborative approach to every project. He worked effectively across product, engineering, and other cross-functional teams, communicated clearly, and did an excellent job balancing changing priorities while continuing to deliver high-quality work on time. Nick is dependable, easy to work with, and someone who genuinely helps move projects forward. I'd gladly work with him again and highly recommend him to any organization looking for a strong technical writer and collaborative teammate.
 >
-> — **Zach Grumet** — worked with Nicholas on the same team at CheckAlt
+> — **Zach Grumet**, Product Manager — worked with Nicholas on the same team at CheckAlt
 
 > I hired Nicholas at Prove and quickly came to rely on him as the backbone of our developer documentation. He led our REST API guides and reference content with clarity and precision, consistently turning complex technical concepts into developer-friendly material that improved integration quality.
 >
 > Nicholas worked seamlessly across engineering, product, and security, ensuring our docs stayed accurate and aligned with fast-moving architecture decisions. He was dependable, proactive, and delivered high-quality work even under tight timelines. Any team needing a technical writer who brings ownership, cross-functional collaboration, and exceptional clarity would be lucky to have him.
 >
-> — **Leandro Margulis** — hired and directly managed Nicholas at Prove
+> — **Leandro Margulis**, Product Executive — hired and directly managed Nicholas at Prove
 
 > I worked with Nick during my time at Prove, and to call him a technical product writer is a disservice. Nick managed all API and product documentation end to end. Directly working with product managers and engineering leads, he was able to bring documentation to life by taking ownership of that deliverable. Regardless of position or level, he was able to hold stakeholders accountable, and make sure that deliverables were met and matched expectations. Nick regularly went above and beyond his role by providing API design feedback, and even making Prove's documentation agentic enabled so bots could understand and use Prove products seamlessly.
 >
-> — **Skyler Fox** — senior to Nicholas at Prove, did not directly manage him
+> — **Skyler Fox**, Product Owner — senior to Nicholas at Prove, did not directly manage him
 
 More recommendations are available on [LinkedIn](https://www.linkedin.com/in/nicholasadewald/).
 
