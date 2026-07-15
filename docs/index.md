@@ -13,14 +13,9 @@ I write for engineers integrating REST APIs, SDKs, and webhook-based flows into 
 
 The docs follow the **[Diátaxis framework](https://diataxis.fr/)**, and this section is organized the same way:
 
-- **[Explanation](./explanation)** — conceptual and background docs that clarify concepts and tradeoffs.
-- **[Tutorials](./tutorial)** — learning-oriented walkthroughs that take a newcomer from zero to a working result.
-- **[How-to Guides](./how-to)** — task-oriented guides for solving a specific integration problem.
-- **[Reference](./reference)** — information-oriented lookup material: fields, file formats, and error codes.
+- **[Explanation](https://papadewald86.github.io/portfolio/docs/explanation)** — conceptual and background docs that clarify concepts and tradeoffs.
+- **[Tutorials](https://papadewald86.github.io/portfolio/docs/tutorial)** — learning-oriented walkthroughs that take a newcomer from zero to a working result.
+- **[How-to Guides](https://papadewald86.github.io/portfolio/docs/how-to)** — task-oriented guides for solving a specific integration problem.
+- **[Reference](https://papadewald86.github.io/portfolio/docs/reference)** — information-oriented lookup material: fields, file formats, and error codes.
 
 They're also built docs-as-code: written in MDX, versioned in Git, and shipped through the same pipeline as the product they document.
-
-{/* test { "testId": "docs-index-links" } */}
-{/* step { "checkLink": "https://www.prove.com/" } */}
-{/* step { "checkLink": "https://diataxis.fr/" } */}
-{/* test end */}

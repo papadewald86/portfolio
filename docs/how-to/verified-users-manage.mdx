@@ -147,7 +147,3 @@ Use the following endpoints when you must stop webhook notifications for a speci
 | Duplicate notifications | Retries or batched deliveries | Treat **`eventId`** as idempotent. Track **`jti`** within your replay window. |
 | Events stop for one customer | **Disconnect**, **moved out of coverage**, or some **phone number change** events | Prove may end the notification stream for that identity. **Re-verify** and re-enroll if the customer supplies an updated number. |
 | Deliveries stop after a few tries | Handler returned non-**2xx** | Return **2xx** after you accept a verified payload. Prove re-queues failed deliveries up to **3** attempts. |
-
-{/* test { "testId": "verified-users-manage-links" } */}
-{/* step { "checkLink": "https://webhook.site/" } */}
-{/* test end */}

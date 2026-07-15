@@ -1,7 +1,39 @@
 {
-  "input": "docs",
+  "$schema": "https://raw.githubusercontent.com/doc-detective/common/refs/heads/main/dist/schemas/config_v3.schema.json",
+  "input": ["docs", "src/pages"],
+  "output": ".doc-detective/results",
+  "loadVariables": ".env",
   "fileTypes": [
-    "markdown"
-  ],
-  "detectSteps": false
+    {
+      "name": "markdown",
+      "extensions": ["md", "markdown", "mdx"],
+      "inlineStatements": {
+        "testStart": [
+          "{\\/\\*\\s*test\\s+?([\\s\\S]*?)\\s*\\*\\/}"
+        ],
+        "testEnd": [
+          "{\\/\\*\\s*test end\\s*\\*\\/}"
+        ],
+        "ignoreStart": [
+          "{\\/\\*\\s*test ignore start\\s*\\*\\/}",
+          "<!--\\s*test ignore start\\s*-->"
+        ],
+        "ignoreEnd": [
+          "{\\/\\*\\s*test ignore end\\s*\\*\\/}"
+        ],
+        "step": [
+          "{\\/\\*\\s*step\\s+?([\\s\\S]*?)\\s*\\*\\/}"
+        ]
+      },
+      "markup": [
+        {
+          "name": "checkHyperlink",
+          "regex": [
+            "(?<!\\!)\\[[^\\]]+\\]\\(\\s*(https?:\\/\\/[^\\s)]+)(?:\\s+\"[^\"]*\")?\\s*\\)"
+          ],
+          "actions": ["checkLink"]
+        }
+      ]
+    }
+  ]
 }

@@ -4,6 +4,7 @@ on:
   pull_request:
     paths:
       - "docs/**"
+      - "src/pages/**"
       - ".doc-detective.json"
 
 jobs:
@@ -11,9 +12,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Write .env from repository secrets
+        run: |
+          printf 'PROVE_CLIENT_ID=%s\nPROVE_CLIENT_SECRET=%s\n' \
+            "${{ secrets.PROVE_CLIENT_ID }}" "${{ secrets.PROVE_CLIENT_SECRET }}" > .env
       - uses: doc-detective/github-action@v1
         with:
           version: latest
           config: .doc-detective.json
-          input: ./docs
           exit_on_fail: true

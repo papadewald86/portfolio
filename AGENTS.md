@@ -30,11 +30,17 @@ sidebar_position: <Number>
 
 - Content is real documentation written for Prove's public developer docs, adapted for this portfolio — don't invent product behavior that doesn't reflect the original source material.
 - Code samples should be complete enough to run, not pseudocode.
-- Internal links must resolve — verify the target page exists before linking to it.
+- Links must be absolute URLs (`https://papadewald86.github.io/portfolio/...` for internal pages) so Doc Detective can verify them — no relative paths.
 
 ## Doc Detective tests
 
-External links referenced in `docs/` pages are validated by [Doc Detective](https://doc-detective.com) via inline `<!-- test -->` / `<!-- step -->` comments (see `.doc-detective.json` at the repo root). If a page introduces a new external link or API endpoint reference, add a `checkLink` step for it in the same page and confirm it passes with `npm run test:docs` before opening a PR. `detectSteps` is set to `false` in the config — only explicit inline tests run, so heading/bold-text auto-detection won't generate false failures.
+Links in `docs/` pages are validated by [Doc Detective](https://doc-detective.com) (see `.doc-detective.json` at the repo root):
+
+- **Markdown links are checked automatically.** A custom `checkHyperlink` markup rule turns every `[text](https://…)` link into a `checkLink` — no manual test needed. This is why all links, including internal ones, must be written as **absolute URLs** (`https://papadewald86.github.io/portfolio/...`), never relative paths.
+- **URLs inside code blocks need explicit tests.** Auto-detection can't see into code fences, so add an inline `{/* test */}` / `{/* step */}` block (JSX comments — HTML comments break MDX) with a `checkLink` step for any load-bearing URL that only appears in a code sample.
+- The config restricts auto-detection markup to `checkHyperlink` only — bold text and headings do not generate test steps, so they can't produce false failures.
+
+Confirm `npm run test:docs` passes before opening a PR.
 
 ## llms.txt
 
