@@ -118,10 +118,10 @@ Use the North America host, `platform.uat.proveapis.com`, or EU host, `platform.
 You get **HTTP 200** with the verified identity: a **`proveId`**, an **`identity`** object, and **`isEnrolled`**. **HTTP 401** means the bearer token is missing, wrong, or expired. Repeat the token step.
 :::
 
-{/* step { "httpRequest": { "url": "https://platform.uat.proveapis.com/v3/verify", "method": "POST", "request": { "headers": { "Authorization": "Bearer $ACCESS_TOKEN", "Content-Type": "application/json" }, "body": { "verificationType": "prefill", "phoneNumber": "2001004065", "clientRequestId": "tutorial-001" } }, "response": { "required": ["proveId", "identity", "isEnrolled"] }, "statusCodes": [200] } } */}
+{/* step { "httpRequest": { "url": "https://platform.uat.proveapis.com/v3/verify", "method": "POST", "request": { "headers": { "Authorization": "Bearer $ACCESS_TOKEN", "Content-Type": "application/json" }, "body": { "verificationType": "prefill", "phoneNumber": "2001004065", "clientRequestId": "tutorial-001" } }, "statusCodes": [200] } } */}
 {/* test end */}
 
-See `POST /v3/verify` for the full request schema. Use Human Assurance Verify for full response interpretation.
+See `POST /v3/verify` for the full request schema. Use Pre-Fill Verify for full response interpretation.
 
 ## Troubleshooting
 
