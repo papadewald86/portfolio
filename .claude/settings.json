@@ -1,0 +1,13 @@
+{
+  "enabledPlugins": {
+    "doc-detective@doc-detective": true
+  },
+  "extraKnownMarketplaces": {
+    "doc-detective": {
+      "source": {
+        "source": "github",
+        "repo": "doc-detective/agent-tools"
+      }
+    }
+  }
+}
