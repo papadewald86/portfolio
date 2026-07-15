@@ -99,6 +99,17 @@ using Prove.Proveapi.Models.Components;
 </TabItem>
 </Tabs>
 
+{/* Tests the server-SDK install instructions above. The TypeScript install
+    runs for real via npm (available locally and in CI). The Go, Java, and
+    .NET samples are verified against their registries: the documented
+    module/artifact/package versions must exist, or the step fails. */}
+{/* test { "testId": "server-sdk-install-live" } */}
+{/* step { "runShell": { "command": "npm", "args": ["install", "--prefix", ".doc-detective/tmp-sdk-server", "--no-audit", "--no-fund", "@prove-identity/prove-api"], "exitCodes": [0], "timeout": 180000 } } */}
+{/* step { "checkLink": "https://proxy.golang.org/github.com/prove-identity/prove-sdk-server-go/@latest" } */}
+{/* step { "checkLink": "https://repo1.maven.org/maven2/com/prove/proveapi/0.21.7/proveapi-0.21.7.pom" } */}
+{/* step { "checkLink": "https://api.nuget.org/v3-flatcontainer/prove.proveapi/1.0.1/prove.proveapi.1.0.1.nupkg" } */}
+{/* test end */}
+
 ### 2. Configure Sandbox credentials in code
 
 Initialize the SDK with your Sandbox **client ID** and **client secret** from environment variables or your secrets store.
@@ -220,6 +231,16 @@ pod install
 
 </TabItem>
 </Tabs>
+
+{/* Tests the client-SDK install instructions above. The Web SDK install runs
+    for real via npm at the documented pinned version. The Android artifact
+    version is verified against Prove's Maven repository, and the
+    cocoapods-art gem against RubyGems. */}
+{/* test { "testId": "client-sdk-install-live" } */}
+{/* step { "runShell": { "command": "npm", "args": ["install", "--prefix", ".doc-detective/tmp-sdk-client", "--no-audit", "--no-fund", "@prove-identity/prove-auth@3.6.3"], "exitCodes": [0], "timeout": 180000 } } */}
+{/* step { "checkLink": "https://prove.jfrog.io/artifactory/libs-public-maven/com/prove/sdk/proveauth/6.12.0/" } */}
+{/* step { "checkLink": "https://rubygems.org/api/v1/gems/cocoapods-art.json" } */}
+{/* test end */}
 
 ## Verify your setup
 
