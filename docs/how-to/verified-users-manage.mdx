@@ -76,20 +76,40 @@ Example decoded payload from the middle segment of the JWT:
 import crypto from 'node:crypto';
 import jwt from 'jsonwebtoken';
 
-// Wrong: JSON.parse(req.body) before hashing changes bytes and breaks body_hash.
-const rawBody = req.rawBody; // capture raw bytes in middleware
-const token = req.headers['x-prove-authorization']?.replace(/^Bearer\s+/i, '');
-const payload = jwt.verify(token, portalSharedSecret, {
-  algorithms: ['HS256'],
-  issuer: 'Prove Identity',
-});
+// Pass the raw request body BYTES (captured in middleware, before any JSON
+// parsing), the X-Prove-Authorization header value, and your Portal shared
+// secret. Returns the parsed notification body, or throws if any check fails.
+function verifyProveWebhook(rawBody, authHeader, sharedSecret) {
+  const token = authHeader?.replace(/^Bearer\s+/i, '');
+  const payload = jwt.verify(token, sharedSecret, {
+    algorithms: ['HS256'],
+    issuer: 'Prove Identity',
+  });
 
-const hash = crypto.createHash('sha256').update(rawBody).digest('hex');
-if (!crypto.timingSafeEqual(Buffer.from(hash), Buffer.from(payload.body_hash))) {
-  return res.status(401).end();
+  // Wrong: JSON.parse(rawBody) before hashing changes bytes and breaks body_hash.
+  const hash = crypto.createHash('sha256').update(rawBody).digest('hex');
+  if (!crypto.timingSafeEqual(Buffer.from(hash), Buffer.from(payload.body_hash))) {
+    throw new Error('body_hash mismatch');
+  }
+  return JSON.parse(rawBody.toString('utf8'));
 }
-const body = JSON.parse(rawBody.toString('utf8'));
 ```
+
+In your handler, call it with the raw bytes and return **401** on any thrown error:
+
+```javascript
+const body = verifyProveWebhook(req.rawBody, req.headers['x-prove-authorization'], portalSharedSecret);
+```
+
+{/* Tests the verification sample above. The harness script extracts the
+    function from this page's code fence at runtime (no drifting copy),
+    simulates a Prove delivery as documented — HS256 JWT with iss/jti and a
+    body_hash over the raw bytes — and asserts the code accepts a valid
+    delivery and rejects tampered, wrong-secret, and wrong-issuer ones. */}
+{/* test { "testId": "webhook-verification-sample-live" } */}
+{/* step { "runShell": { "command": "npm", "args": ["install", "--prefix", ".doc-detective/tmp-webhook-test", "--no-audit", "--no-fund", "jsonwebtoken"], "exitCodes": [0], "timeout": 180000 } } */}
+{/* step { "runShell": { "command": "node", "args": ["scripts/test-webhook-verification.js"], "exitCodes": [0], "timeout": 60000 } } */}
+{/* test end */}
 
 ### 6. Parse and handle the JSON body
 
