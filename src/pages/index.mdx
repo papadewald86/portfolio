@@ -70,6 +70,19 @@ Real pages from Prove's developer docs, organized by the [Diátaxis framework](h
   </div>
 </div>
 
+{/* The card links above are JSX <Link> components with relative routes, so the
+    automatic markdown-link detection can't see them — checked explicitly here
+    against the live site. The Published Writing card's #fragment can't be
+    verified over HTTP, so its step checks the page it lands on. */}
+{/* test { "testId": "landing-page-card-links" } */}
+{/* step { "checkLink": "https://papadewald86.github.io/portfolio/docs/explanation" } */}
+{/* step { "checkLink": "https://papadewald86.github.io/portfolio/docs/tutorial" } */}
+{/* step { "checkLink": "https://papadewald86.github.io/portfolio/docs/how-to" } */}
+{/* step { "checkLink": "https://papadewald86.github.io/portfolio/docs/reference" } */}
+{/* step { "checkLink": "https://papadewald86.github.io/portfolio/expertise" } */}
+{/* step { "checkLink": "https://papadewald86.github.io/portfolio/how-i-work" } */}
+{/* test end */}
+
 ## What I Do
 
 * Developer Documentation
