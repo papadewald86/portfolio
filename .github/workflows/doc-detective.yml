@@ -14,8 +14,9 @@ jobs:
       - uses: actions/checkout@v4
       - name: Write .env from repository secrets
         run: |
-          printf 'PROVE_CLIENT_ID=%s\nPROVE_CLIENT_SECRET=%s\n' \
-            "${{ secrets.PROVE_CLIENT_ID }}" "${{ secrets.PROVE_CLIENT_SECRET }}" > .env
+          printf 'PROVE_CLIENT_ID=%s\nPROVE_CLIENT_SECRET=%s\nPROVE_EU_CLIENT_ID=%s\nPROVE_EU_CLIENT_SECRET=%s\n' \
+            "${{ secrets.PROVE_CLIENT_ID }}" "${{ secrets.PROVE_CLIENT_SECRET }}" \
+            "${{ secrets.PROVE_EU_CLIENT_ID }}" "${{ secrets.PROVE_EU_CLIENT_SECRET }}" > .env
       - uses: doc-detective/github-action@v1
         with:
           version: latest

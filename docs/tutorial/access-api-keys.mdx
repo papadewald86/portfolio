@@ -88,6 +88,15 @@ For Platform API calls, use the **`access_token`** value as a **Bearer** token.
 You receive **HTTP 200** with `"token_type": "Bearer"` and a non-empty **`access_token`**.
 :::
 
+{/* Verifies the EU Sandbox claim from the warning above: the EU token host
+    accepts the "International" credentials and returns the same token shape.
+    Uses a separate credential pair (PROVE_EU_*) from the gitignored .env.
+    This is a complete, self-contained test — the US test below spans through
+    step 5, so this block must fully close before it starts. */}
+{/* test { "testId": "token-endpoint-live-eu" } */}
+{/* step { "httpRequest": { "url": "https://platform.uat.eu.proveapis.com/token", "method": "POST", "request": { "headers": { "Content-Type": "application/x-www-form-urlencoded" }, "body": "grant_type=client_credentials&client_id=$PROVE_EU_CLIENT_ID&client_secret=$PROVE_EU_CLIENT_SECRET" }, "response": { "required": ["access_token", "token_type", "expires_in"] }, "statusCodes": [200] } } */}
+{/* test end */}
+
 {/* Executes the documented requests against the live US Sandbox host, in the
     same sequence the tutorial teaches: token first (step 4), then /v3/verify
     with the captured bearer token (step 5). Credentials come from a gitignored
