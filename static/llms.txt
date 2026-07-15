@@ -31,7 +31,6 @@ Real developer documentation written for Prove's public developer docs, organize
 - [Set up Prove SDKs in your project](https://papadewald86.github.io/portfolio/docs/how-to/dev-environment-sdk-setup): Server and client SDK installation across Go, TypeScript, Java, .NET, web, Android, and iOS
 - [Unified Authentication](https://papadewald86.github.io/portfolio/docs/how-to/human-assurance-prove-passive-auth): Passive authentication with customer-supplied possession fallback, including Mermaid flow diagrams and multi-language code samples
 - [Verified User Manage](https://papadewald86.github.io/portfolio/docs/how-to/verified-users-manage): Webhook registration, JWT verification, and identity change notifications
-- [Implement ProveX](https://papadewald86.github.io/portfolio/docs/how-to/provex-implementation-guide): Discover and fetch marketplace attributes with Sandbox testing steps
 
 ### Reference
 
