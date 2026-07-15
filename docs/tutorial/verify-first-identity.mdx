@@ -67,7 +67,7 @@ curl -X POST "https://platform.uat.proveapis.com/v3/verify" \
 ```
 
 :::tip[Checkpoint]
-You receive **HTTP 200** with `"assuranceLevel": "AL1"` and a non-empty **`proveId`**. An **HTTP 401** means the bearer token is missing, wrong, or expired. Repeat Step 1.
+You receive **HTTP 200** with `"assuranceLevel": "AL1"` and a non-empty **`proveId`**.
 :::
 
 {/* step { "httpRequest": { "url": "https://platform.uat.proveapis.com/v3/verify", "method": "POST", "request": { "headers": { "Authorization": "Bearer $HA_ACCESS_TOKEN", "Content-Type": "application/json" }, "body": { "verificationType": "humanAssurance", "phoneNumber": "2001004051", "clientRequestId": "tutorial-001" } }, "response": { "body": { "identity": { "assuranceLevel": "AL1" } }, "required": ["proveId", "isEnrolled"] }, "statusCodes": [200] } } */}
