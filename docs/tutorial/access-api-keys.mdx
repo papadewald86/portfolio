@@ -88,12 +88,12 @@ For Platform API calls, use the **`access_token`** value as a **Bearer** token.
 You receive **HTTP 200** with `"token_type": "Bearer"` and a non-empty **`access_token`**.
 :::
 
-{/* Executes the documented token request against the live US Sandbox host.
-    Credentials come from a gitignored .env file (see .env.example) so they
-    never appear in this public repo. */}
+{/* Executes the documented requests against the live US Sandbox host, in the
+    same sequence the tutorial teaches: token first (step 4), then /v3/verify
+    with the captured bearer token (step 5). Credentials come from a gitignored
+    .env file (see .env.example) so they never appear in this public repo. */}
 {/* test { "testId": "token-endpoint-live" } */}
-{/* step { "httpRequest": { "url": "https://platform.uat.proveapis.com/token", "method": "POST", "request": { "headers": { "Content-Type": "application/x-www-form-urlencoded" }, "body": "grant_type=client_credentials&client_id=$PROVE_CLIENT_ID&client_secret=$PROVE_CLIENT_SECRET" }, "response": { "required": ["access_token", "token_type", "expires_in"] }, "statusCodes": [200] } } */}
-{/* test end */}
+{/* step { "httpRequest": { "url": "https://platform.uat.proveapis.com/token", "method": "POST", "request": { "headers": { "Content-Type": "application/x-www-form-urlencoded" }, "body": "grant_type=client_credentials&client_id=$PROVE_CLIENT_ID&client_secret=$PROVE_CLIENT_SECRET" }, "response": { "required": ["access_token", "token_type", "expires_in"] }, "statusCodes": [200] }, "variables": { "ACCESS_TOKEN": "$$response.body.access_token" } } */}
 
 ### 5. Confirm the bearer token on a Platform API
 
@@ -106,8 +106,8 @@ curl -X POST "https://platform.uat.proveapis.com/v3/verify" \
   -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
-    "verificationType": "humanAssurance",
-    "phoneNumber": "2001004051",
+    "verificationType": "prefill",
+    "phoneNumber": "2001004065",
     "clientRequestId": "tutorial-001"
   }'
 ```
@@ -115,8 +115,11 @@ curl -X POST "https://platform.uat.proveapis.com/v3/verify" \
 Use the North America host, `platform.uat.proveapis.com`, or EU host, `platform.uat.eu.proveapis.com`, to match your token request.
 
 :::tip[Checkpoint]
-You get **HTTP 200** with a JSON **`success`** field. **HTTP 401** means the bearer token is missing, wrong, or expired. Repeat the token step.
+You get **HTTP 200** with the verified identity: a **`proveId`**, an **`identity`** object, and **`isEnrolled`**. **HTTP 401** means the bearer token is missing, wrong, or expired. Repeat the token step.
 :::
+
+{/* step { "httpRequest": { "url": "https://platform.uat.proveapis.com/v3/verify", "method": "POST", "request": { "headers": { "Authorization": "Bearer $ACCESS_TOKEN", "Content-Type": "application/json" }, "body": { "verificationType": "prefill", "phoneNumber": "2001004065", "clientRequestId": "tutorial-001" } }, "response": { "required": ["proveId", "identity", "isEnrolled"] }, "statusCodes": [200] } } */}
+{/* test end */}
 
 See `POST /v3/verify` for the full request schema. Use Human Assurance Verify for full response interpretation.
 
