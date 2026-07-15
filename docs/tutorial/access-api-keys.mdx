@@ -75,8 +75,6 @@ curl -X POST https://platform.uat.eu.proveapis.com/token \
 ```json title="Example token response"
 {
   "access_token": "eyJ...",
-  "refresh_token": "eyJ...",
-  "refresh_expires_in": 3600,
   "token_type": "Bearer",
   "expires_in": 3600
 }
@@ -84,7 +82,7 @@ curl -X POST https://platform.uat.eu.proveapis.com/token \
 
 Access tokens from `POST /token` are valid for **1 hour**. Request a new token when it expires.
 
-For Platform API calls, use the **`access_token`** value as a **Bearer** token. You can ignore **`refresh_token`** for this client-credentials flow unless your integration explicitly uses refresh.
+For Platform API calls, use the **`access_token`** value as a **Bearer** token.
 
 :::tip[Checkpoint]
 You receive **HTTP 200** with `"token_type": "Bearer"` and a non-empty **`access_token`**.
@@ -94,7 +92,7 @@ You receive **HTTP 200** with `"token_type": "Bearer"` and a non-empty **`access
     Credentials come from a gitignored .env file (see .env.example) so they
     never appear in this public repo. */}
 {/* test { "testId": "token-endpoint-live" } */}
-{/* step { "httpRequest": { "url": "https://platform.uat.proveapis.com/token", "method": "POST", "request": { "headers": { "Content-Type": "application/x-www-form-urlencoded" }, "body": "grant_type=client_credentials&client_id=$PROVE_CLIENT_ID&client_secret=$PROVE_CLIENT_SECRET" }, "statusCodes": [200] } } */}
+{/* step { "httpRequest": { "url": "https://platform.uat.proveapis.com/token", "method": "POST", "request": { "headers": { "Content-Type": "application/x-www-form-urlencoded" }, "body": "grant_type=client_credentials&client_id=$PROVE_CLIENT_ID&client_secret=$PROVE_CLIENT_SECRET" }, "response": { "required": ["access_token", "token_type", "expires_in"] }, "statusCodes": [200] } } */}
 {/* test end */}
 
 ### 5. Confirm the bearer token on a Platform API
