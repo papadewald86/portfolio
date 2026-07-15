@@ -5,7 +5,7 @@ description: Run a complete identity verification end to end in Sandbox with POS
 sidebar_position: 2
 ---
 
-This tutorial takes you from a Sandbox bearer token to your first completed identity verification. You call `POST /v3/verify` for **Human Assurance**, read a passing result, then trigger a failing result and read the reasons. By the end you can interpret the fields that decide whether to **allow**, **step up**, or **block** a user.
+This tutorial takes you from a Sandbox bearer token to your first completed identity verification. You call `POST /v3/verify` for **Human Assurance**, read a passing result, then trigger a failing result and compare the two. By the end you can interpret the fields that decide whether to **allow**, **step up**, or **block** a user.
 
 This tutorial uses **Human Assurance**, a server-only flow that needs no client SDK, so you can complete every step with cURL. For the wider product set, see [What's next](#whats-next).
 
@@ -17,8 +17,8 @@ Human Assurance is available only in the **United States**.
 
 - Exchange Sandbox credentials for a bearer token
 - Send a verification request to `POST /v3/verify` with a Sandbox test user
-- Read `success`, `identity.assuranceLevel`, and `evaluation` to understand a passing result
-- Trigger a failing result and map its failure reasons
+- Read `identity.assuranceLevel`, `proveId`, and `isEnrolled` to understand a passing result
+- Trigger a failing result and recognize it by its assurance level
 
 ## Prerequisites
 
@@ -42,6 +42,13 @@ Copy the **`access_token`** from the response. Tokens are valid for **1 hour**. 
 You receive **HTTP 200** with `"token_type": "Bearer"` and a non-empty **`access_token`**.
 :::
 
+{/* Executes this tutorial's documented flow live: token (step 1), passing
+    verification for Ewen Brimilcome (step 2), failing verification for Hilary
+    Kumaar (step 4). Uses Human Assurance project credentials (PROVE_HA_*)
+    from the gitignored .env — see .env.example. */}
+{/* test { "testId": "human-assurance-verify-live" } */}
+{/* step { "httpRequest": { "url": "https://platform.uat.proveapis.com/token", "method": "POST", "request": { "headers": { "Content-Type": "application/x-www-form-urlencoded" }, "body": "grant_type=client_credentials&client_id=$PROVE_HA_CLIENT_ID&client_secret=$PROVE_HA_CLIENT_SECRET" }, "response": { "required": ["access_token", "token_type", "expires_in"] }, "statusCodes": [200] }, "variables": { "HA_ACCESS_TOKEN": "$$response.body.access_token" } } */}
+
 ### 2. Verify a known-good identity
 
 Send your first verification. Use the Sandbox test user **Ewen Brimilcome**, whose phone number always passes. Replace `YOUR_ACCESS_TOKEN` with the token from Step 1.
@@ -60,8 +67,10 @@ curl -X POST "https://platform.uat.proveapis.com/v3/verify" \
 ```
 
 :::tip[Checkpoint]
-You receive **HTTP 200** with `"success": "true"`. An **HTTP 401** means the bearer token is missing, wrong, or expired. Repeat Step 1.
+You receive **HTTP 200** with `"assuranceLevel": "AL1"` and a non-empty **`proveId`**. An **HTTP 401** means the bearer token is missing, wrong, or expired. Repeat Step 1.
 :::
+
+{/* step { "httpRequest": { "url": "https://platform.uat.proveapis.com/v3/verify", "method": "POST", "request": { "headers": { "Authorization": "Bearer $HA_ACCESS_TOKEN", "Content-Type": "application/json" }, "body": { "verificationType": "humanAssurance", "phoneNumber": "2001004051", "clientRequestId": "tutorial-001" } }, "response": { "body": { "identity": { "assuranceLevel": "AL1" } }, "required": ["proveId", "isEnrolled"] }, "statusCodes": [200] } } */}
 
 ### 3. Read the verification result
 
@@ -69,21 +78,13 @@ The response carries the signals you act on. Here is the passing result for Ewen
 
 ```json title="Success response"
 {
-    "success": "true",
-    "correlationId": "39614b5f-b123-46bb-b36c-43eb930aa344",
+    "correlationId": "95ee4cef-ec2f-47b6-a3d0-6a6dd41f966b",
     "clientRequestId": "tutorial-001",
     "phoneNumber": "2001004051",
     "proveId": "7fe34f25-4c71-4589-8330-0bf265374528",
+    "provePhoneAlias": "XZM1NPS5S24E775YJHG6AMRG42X292ZDZ7J527WD5YKUDFYU5D4BMR94Z0P2BAJQUQHCD77LCE92T6E195S7FS3FB2PLCEUCBJHFAK70G8SY1JTC3RAS07S4HUR64G66",
     "identity": {
         "assuranceLevel": "AL1"
-    },
-    "evaluation": {
-        "authentication": {
-            "result": "pass"
-        },
-        "risk": {
-            "result": "pass"
-        }
     },
     "isEnrolled": true
 }
@@ -91,13 +92,13 @@ The response carries the signals you act on. Here is the passing result for Ewen
 
 Read these fields in order:
 
-- **`success`**: The top-level pass or fail. Branch your UX and backend logic on this value.
-- **`identity.assuranceLevel`**: Your confidence signal for human-versus-automation policy.
-- **`evaluation`**: The authentication and risk outcomes. Interpret them with the Global Fraud Policy. For Human Assurance, weigh both `authentication` and `risk` when you tune thresholds.
-- **`proveId`**: A stable identifier for the verified identity. Persist it when you need support, auditing, or linking to other Prove flows.
+- **`identity.assuranceLevel`**: The verification outcome and your confidence signal for human-versus-automation policy. **`AL1`** is a passing read — branch your UX and backend logic on this value.
+- **`proveId`**: A stable identifier for the verified identity, returned only when verification passes. Persist it when you need support, auditing, or linking to other Prove flows.
+- **`isEnrolled`**: Whether the identity was enrolled for continuous monitoring under the Global Fraud Policy.
+- **`provePhoneAlias`**: An opaque, stable alias for the verified phone number.
 
 :::tip[Checkpoint]
-You can point to the field that holds the pass or fail decision and the field that holds the assurance level.
+You can point to the field that holds the verification outcome and the field you persist for later Prove flows.
 :::
 
 ### 4. See a failed verification
@@ -115,44 +116,32 @@ curl -X POST "https://platform.uat.proveapis.com/v3/verify" \
   }'
 ```
 
-The failing response carries `failureReasons` codes you map to a policy action.
+The failing response returns a low assurance level — and no `proveId` to act on.
 
 ```json title="Failure response"
 {
-    "success": "false",
-    "correlationId": "afdbcc66-d67c-4523-b068-2c749f7cad27",
+    "correlationId": "2df1ad4b-4185-416a-9650-cbdd5056c00a",
     "clientRequestId": "tutorial-002",
     "phoneNumber": "2001004052",
     "identity": {
         "assuranceLevel": "AL-1"
     },
-    "evaluation": {
-        "authentication": {
-            "failureReasons": {
-                "9176": "The phone number and identity is strongly associated with a fraud vector."
-            },
-            "result": "fail"
-        },
-        "risk": {
-            "failureReasons": {
-                "9304": "Suspicious large amount of recent activity across different identity attributes."
-            },
-            "result": "fail"
-        }
-    },
     "isEnrolled": false
 }
 ```
 
-Read `evaluation.authentication.failureReasons` and `evaluation.risk.failureReasons`, then map each code with the Global Fraud Policy. A low `assuranceLevel` such as `AL-1` signals a failed human-presence read.
+Compare it to the passing response: a low `assuranceLevel` such as `AL-1` signals a failed human-presence read, no `proveId` or `provePhoneAlias` is issued, and `isEnrolled` is `false`. Branch on the assurance level and the absence of `proveId`, and route the user to your fallback policy — block, or step up to another verification method.
 
 :::tip[Checkpoint]
-You receive **HTTP 200** with `"success": "false"` and at least one code under `failureReasons`.
+You receive **HTTP 200** with `"assuranceLevel": "AL-1"` and no **`proveId`** in the response.
 :::
+
+{/* step { "httpRequest": { "url": "https://platform.uat.proveapis.com/v3/verify", "method": "POST", "request": { "headers": { "Authorization": "Bearer $HA_ACCESS_TOKEN", "Content-Type": "application/json" }, "body": { "verificationType": "humanAssurance", "phoneNumber": "2001004052", "clientRequestId": "tutorial-002" } }, "response": { "body": { "identity": { "assuranceLevel": "AL-1" }, "isEnrolled": false } }, "statusCodes": [200] } } */}
+{/* test end */}
 
 ## Summary
 
-You ran a complete identity verification end to end. You exchanged Sandbox credentials for a bearer token, called `POST /v3/verify` for Human Assurance, read a passing result, and mapped the reasons behind a failing result. You now know which fields drive an allow, step-up, or block decision.
+You ran a complete identity verification end to end. You exchanged Sandbox credentials for a bearer token, called `POST /v3/verify` for Human Assurance, read a passing result, and recognized a failing one by its assurance level. You now know which fields drive an allow, step-up, or block decision.
 
 ## What's next
 
