@@ -115,7 +115,7 @@ curl -X POST "https://platform.uat.proveapis.com/v3/verify" \
 Use the North America host, `platform.uat.proveapis.com`, or EU host, `platform.uat.eu.proveapis.com`, to match your token request.
 
 :::tip[Checkpoint]
-You get **HTTP 200** with the verified identity: a **`proveId`**, an **`identity`** object, and **`isEnrolled`**. **HTTP 401** means the bearer token is missing, wrong, or expired. Repeat the token step.
+You get **HTTP 200** with the verified identity.
 :::
 
 {/* step { "httpRequest": { "url": "https://platform.uat.proveapis.com/v3/verify", "method": "POST", "request": { "headers": { "Authorization": "Bearer $ACCESS_TOKEN", "Content-Type": "application/json" }, "body": { "verificationType": "prefill", "phoneNumber": "2001004065", "clientRequestId": "tutorial-001" } }, "statusCodes": [200] } } */}
