@@ -7,6 +7,7 @@ sidebar_position: 1
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
+import Callout from '@site/src/components/Callout';
 
 Use this guide when you already have an app and need **Prove packages** and **Sandbox configuration** in the repo. Complete **server** steps for any backend that calls Prove Platform APIs. Add **one** client tab only if your product runs possession (Prove Key, Mobile Auth, OTP, and so on) in the browser or native app.
 
@@ -114,13 +115,13 @@ using Prove.Proveapi.Models.Components;
 
 Initialize the SDK with your Sandbox **client ID** and **client secret** from environment variables or your secrets store.
 
-:::info
+<Callout type="info">
 The exact client-initialization snippet for each language lives in Prove's shared snippet library and is kept in sync with SDK releases. See the live guide for the current code sample per language.
-:::
+</Callout>
 
-:::warning
+<Callout type="warning">
 Replace `uat-us` with `uat-eu` if you are testing outside North America.
-:::
+</Callout>
 
 ### 3. Install the client-side SDK — optional
 
@@ -139,9 +140,9 @@ npm install @prove-identity/prove-auth@3.6.3
 <script src="assets/js/prove-auth-v3.6.3.js"></script>
 ```
 
-:::warning
+<Callout type="warning">
 If you're loading the SDK from the [public CDN](https://www.jsdelivr.com/) and using [Content Security Policy headers](https://content-security-policy.com/), ensure you add `https://cdn.jsdelivr.net/npm/@prove-identity/` to `script-src`, plus corresponding `sha256-...` or `nonce-...`.
-:::
+</Callout>
 
 </TabItem>
 <TabItem value="android" label="Android SDK">

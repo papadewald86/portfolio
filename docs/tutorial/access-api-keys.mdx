@@ -7,6 +7,7 @@ sidebar_position: 1
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
+import Callout from '@site/src/components/Callout';
 
 This tutorial walks through Sandbox **OAuth 2.0 client credentials**: sign in to the Developer Portal, copy Sandbox keys, call `POST /token`, then send one authenticated request to confirm the bearer token works.
 
@@ -47,9 +48,9 @@ You have a Sandbox **client ID** and **client secret** ready to paste into cURL.
 
 Prove Platform APIs use **OAuth 2.0 client credentials**. Send **POST** to `POST /token` with `Content-Type: application/x-www-form-urlencoded` and your values in place of the placeholders.
 
-:::warning
+<Callout type="warning">
 If you are testing outside North America, use the **EU** token host and the **International** credentials from your project: `https://platform.uat.eu.proveapis.com/token`.
-:::
+</Callout>
 
 <Tabs>
 <TabItem value="us" label="US Sandbox">

@@ -7,6 +7,7 @@ sidebar_position: 2
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
+import Callout from '@site/src/components/Callout';
 
 Use this guide to integrate **prove passive authentication with customer-supplied possession fallback** for **Human Assurance**.
 
@@ -14,13 +15,13 @@ The client runs **Mobile Auth and OTP**, and your server polls **`POST /v3/unify
 
 For client setup, see Human Assurance Prove possession web, Android, or iOS. For customer-only possession, see Human Assurance customer-supplied possession with force bind. For product context, see Human Assurance overview.
 
-:::info
+<Callout type="info">
 **Prove passive authentication with customer-supplied possession fallback** requires **both** a **client-side SDK** and these **platform APIs**:
 
 - `POST /v3/unify`
 - `POST /v3/unify-status`
 - `POST /v3/unify-bind`
-:::
+</Callout>
 
 ## Prerequisites
 
@@ -49,9 +50,9 @@ Persist the **correlation ID** from **`POST /v3/unify`** for status and bind. Re
 
 ## Implementation steps
 
-:::warning
+<Callout type="warning">
 **Customer-supplied fallback and bind** apply when prove-led possession doesn't complete and **`POST /v3/unify-status`** returns **`possession_required`**, most often on **mobile channels**. Desktop web may complete through **Instant Link** with **`success=true`** and no bind. See [Sandbox testing](#sandbox-testing) for pass, fail, and fallback test users.
-:::
+</Callout>
 
 ### 1. Determine client channel
 
@@ -187,9 +188,9 @@ async function authenticate(isMobileWeb, authToken) {
 }
 ```
 
-:::warning
+<Callout type="warning">
 Mobile Auth requires your Content Security Policy to allow Prove's endpoints on mobile web. If Mobile Auth silently never runs, check your CSP configuration first — see [Common failures](#common-failures) below.
-:::
+</Callout>
 
 </TabItem>
 <TabItem value="android" label="Android SDK">
@@ -451,17 +452,17 @@ var rspUnifyBind = await sdk.V3.V3UnifyBindRequestAsync(bindReq);
 
 Return the binding outcome to the client. Interpret **`evaluation`** using the Global Fraud Policy.
 
-:::info
+<Callout type="info">
 If the phone number on **`POST /v3/unify`** differs from the number on the Prove Key, **`POST /v3/unify-status`** may return **`possession_required`**. Call **`POST /v3/unify-bind`** to rebind the Prove Key to the new number. A Prove Key supports **one** phone number at a time.
-:::
+</Callout>
 
 ## Key revocation
 
 `POST /v3/device/revoke` deactivates the Prove Key for a device. Pass the **`deviceId`** in the request body with a **`clientRequestId`**.
 
-:::info
+<Callout type="info">
 Track each customer's **`deviceId`** after successful authentication so you can revoke when they sign out, report fraud, or replace a device.
-:::
+</Callout>
 
 If the customer tries to authenticate using the **same phone number** containing the revoked key, you receive:
 
@@ -474,9 +475,9 @@ If the customer tries to authenticate using the **same phone number** containing
 
 In your app, prompt for a phone number or login. When they confirm, start a new **`POST /v3/unify`** session and complete possession again.
 
-:::info
+<Callout type="info">
 Migrating from the legacy Mobile Auth SDK to the current Prove Auth SDK? See Prove's SDK migration guide in the developer docs for the exact steps.
-:::
+</Callout>
 
 ## Sandbox testing
 
@@ -540,9 +541,9 @@ Jesse Mashro is a **Mobile Auth fail** case. Use this user to confirm that prove
 
 Penny Jowers exercises **Mobile Auth failure with customer-supplied possession fallback**. Mobile Auth fails for this user. Perform your customer-supplied possession check, then bind. Expect **`success=true`** on **`POST /v3/unify-bind`**.
 
-:::warning
+<Callout type="warning">
 With **`checkReputation=true`** on **`POST /v3/unify`**, Penny fails the reputation check and returns **`success=false`** on the final response.
-:::
+</Callout>
 
 1. **Prompt customer** — Start the onboarding flow on the initial screen and enter the phone number for Penny Jowers.
 2. **Initiate start request** — Your front end sends the phone number and possession type to the back end. Your back end sends the phone number to the /unify endpoint. The response provides an auth token, correlation ID, and `success=pending`.

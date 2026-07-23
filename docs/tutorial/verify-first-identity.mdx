@@ -5,13 +5,15 @@ description: Run a complete identity verification end to end in Sandbox with POS
 sidebar_position: 2
 ---
 
+import Callout from '@site/src/components/Callout';
+
 This tutorial takes you from a Sandbox bearer token to your first completed identity verification. You call `POST /v3/verify` for **Human Assurance**, read a passing result, then trigger a failing result and compare the two. By the end you can interpret the fields that decide whether to **allow**, **step up**, or **block** a user.
 
 This tutorial uses **Human Assurance**, a server-only flow that needs no client SDK, so you can complete every step with cURL. For the wider product set, see [What's next](#whats-next).
 
-:::info
+<Callout type="info">
 Human Assurance is available only in the **United States**.
-:::
+</Callout>
 
 ## What you learn
 

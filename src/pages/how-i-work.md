@@ -5,7 +5,7 @@ description: How I rebuilt Prove's developer docs for an audience of AI coding a
 
 # Case Study: Making Developer Docs AI-Ready
 
-**Role:** Technical Product Writer, Prove &nbsp;·&nbsp; **Scope:** Two developer documentation sites, 15+ product lines, read by engineers integrating identity-verification APIs and SDKs
+**Role:** Technical Product Writer, Prove &nbsp;·&nbsp; **Scope:** Prove's public developer platform docs site, read by engineers integrating identity-verification APIs and SDKs
 
 ## The problem
 
@@ -25,7 +25,7 @@ flowchart LR
   D -->|"re-measure: 98/100"| A
 ```
 
-**Measured first.** I baselined both sites against Dachary Carey's [Agent-Friendly Documentation Spec](https://github.com/agent-ecosystem/agent-docs-spec) — an open standard that checks how well a docs site serves AI agents across seven categories, from content discoverability and clean Markdown availability to page size and URL stability. Scored with [Mintlify's Agent Score tool](https://www.mintlify.com/score), which implements the spec, we started at **67 out of 100**: pages that compressed badly, lookups that failed, instructions an agent couldn't execute.
+**Measured first.** I baselined our public platform docs site against Dachary Carey's [Agent-Friendly Documentation Spec](https://github.com/agent-ecosystem/agent-docs-spec) — an open standard that checks how well a docs site serves AI agents across seven categories, from content discoverability and clean Markdown availability to page size and URL stability. Scored with [Mintlify's Agent Score tool](https://www.mintlify.com/score), which implements the spec, we started at **67 out of 100**: pages that compressed badly, lookups that failed, instructions an agent couldn't execute.
 
 **Rewrote for lossy compression.** The core insight: agents don't read pages, they read what's left after summarization. That reshaped concrete writing rules:
 

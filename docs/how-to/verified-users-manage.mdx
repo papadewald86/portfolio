@@ -5,11 +5,13 @@ description: Register an Identity Manager webhook in the Portal, verify JWT-sign
 sidebar_position: 3
 ---
 
+import Callout from '@site/src/components/Callout';
+
 Use this guide to receive Identity Manager webhooks for Verified User: register an HTTPS endpoint in the Prove Portal, verify JWT-signed deliveries, and process phone and identity change notifications.
 
-:::info
+<Callout type="info">
 Webhook events are available in the **US** only.
-:::
+</Callout>
 
 After Verified Users Verify or Verified User Connect enrolls an identity that meets the Global Fraud Policy, Prove sends webhook notifications when the enrolled phone or identity changes. Flow: **verify** → **enrollment** → continuous monitoring → **webhook** on phone/identity change.
 
@@ -38,9 +40,9 @@ Go to **Projects**. Create a project and choose **Prove Identity Manager**, or o
 
 In the project, open the **Configure** tab. Set the environment to **Sandbox** or **Production**, then open **Webhook settings** for that environment.
 
-:::tip
+<Callout type="tip">
 For a throwaway test URL, use [Webhook.site](https://webhook.site/) to mint a unique HTTPS endpoint.
-:::
+</Callout>
 
 ### 4. Paste your webhook URL and save
 

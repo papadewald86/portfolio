@@ -5,6 +5,8 @@ description: Look up Prove Connect SFTP paths, CSV layout, validation error code
 sidebar_position: 1
 ---
 
+import Callout from '@site/src/components/Callout';
+
 ## Scope
 
 Batch **Human Assurance** verification through Connect: upload CSV to **`ToProve`**, Prove calls `POST /v3/verify` with **`verificationType`: `humanAssurance`**, and enrolls rows that pass the Global Fraud Policy in Identity Manager.
@@ -13,9 +15,9 @@ For realtime request and response semantics, see Human Assurance Verify. For con
 
 Connect is the Prove Platform **batch verification** interface. Customers upload CSV files over **SFTP**. Connect verifies each valid row with **`POST /v3/verify`**. Connect enrolls rows that pass the **Global Fraud Policy** in **Identity Manager**. Output columns align with synchronous verify responses. Interpret **`Authentication Result`**, **`Risk Result`**, and assurance fields using the Global Fraud Policy and your product verify guide.
 
-:::info
+<Callout type="info">
 Connect supports **`verifiedUser`** and **`humanAssurance`**.
-:::
+</Callout>
 
 ## Scope details
 
@@ -37,9 +39,9 @@ Prove provides the following items during onboarding. Some correspond to fields 
 | Directory Paths | `ToProve` for uploading and `FromProve` for downloading |
 | Authentication requirements | Hostname, port, username, and password |
 
-:::info
+<Callout type="info">
 Give your Pretty Good Privacy (PGP) public key to Prove during onboarding if you encrypt files at rest for SFTP transfer. Prove confirms cipher and key requirements in your onboarding package.
-:::
+</Callout>
 
 **Partner metadata**
 
@@ -165,9 +167,9 @@ Optional row that names CSV columns for detail records. **`Record Type`** is `C`
 | Record Type | `T` | Yes, always `T` |
 | Number of Records | `132789` | Yes, must equal detail row count |
 
-:::info
+<Callout type="info">
 There is **no formal cap** on input file size or detail record count per file. When splitting work across uploads, Prove recommends **800,000 detail records or fewer per file**. Verification throughput is subject to **Data Partner transactions-per-second (TPS)** limits. **Completion time** varies with detail record count and effective throughput.
-:::
+</Callout>
 
 #### Example input file
 
@@ -214,9 +216,9 @@ Appended columns follow the input columns for that row, then:
 
 Row-level verify failures still appear in the output file with **`Authentication Result`** / **`Risk Result`** and assurance fields populated from the verify response. See Global Fraud Policy for failure reason codes.
 
-:::info
+<Callout type="info">
 Prove only includes the top-level identity in the output.
-:::
+</Callout>
 
 #### Trailer record
 
@@ -247,9 +249,9 @@ Prove writes rows that fail **row validation** to a separate **error** CSV under
 | `ERR_PHONE_COUNTRY_NOTSUPPORTED` | Phone country not supported |
 | `ERR_DUPLICATE_RECORD_ORIGINAL_PRESERVED` | Duplicate record detected |
 
-:::warning
+<Callout type="warning">
 US phone numbers must not appear in international-region files, and international numbers must not appear in US-region files.
-:::
+</Callout>
 
 #### Header record
 
