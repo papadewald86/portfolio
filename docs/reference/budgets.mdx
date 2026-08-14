@@ -1,0 +1,169 @@
+---
+title: Budgets
+sidebar_label: Budgets
+description: Cap agent spend by tokens, cost, or steps, and control what happens when a run crosses the line
+sidebar_position: 2
+---
+
+import Callout from '@site/src/components/Callout';
+
+<Callout type="tip">
+Before you begin, make sure you're familiar with:
+
+- [Agent Server](https://docs.langchain.com/langsmith/agent-server): the API layer this feature configures
+- [Runs](https://docs.langchain.com/langsmith/runs): the run, thread, and deployment hierarchy that budget `scope` maps onto
+- A working [LangGraph CLI](https://docs.langchain.com/langsmith/cli) setup (`langgraph dev` or `langgraph up`)
+</Callout>
+
+Agents can run away. A loop that keeps calling the same tool, a conversation thread that never ends, a deployment with no ceiling on token spend. Agents need guardrails. Budgets give you that. A `budget` block in `agent.json` declares limits up front, protecting you from unknown cost after the fact.
+
+## Schema definition
+
+Every key below is a property of the `budget` block in `agent.json`.
+
+### The `scope` key
+
+`scope` sets what a `budget` applies to. Every `budget` block must include it.
+
+| Scope | What it caps | Example |
+|-------|---------------|---------|
+| `run` | A single invocation of an assistant | Cap one run at 50 steps so a single bad tool loop can't spiral |
+| `thread` | All runs on a thread, cumulative | Cap a support conversation at $2 total before it needs a human |
+| `deployment` | All runs across the deployment, cumulative | Cap a whole deployment at $500/month regardless of thread |
+
+```json title="agent.json" {3-4}
+{
+  // ...
+  "budget": {
+    "scope": "thread",
+    "limits": {
+      "max_tokens": 100000,
+      "max_cost_usd": 2.50,
+      "max_steps": 40
+    },
+    "on_exceed": "pause",
+    "reset": "monthly",
+    "notify": "https://example.com/webhooks/budget-alerts"
+  }
+  // ...
+}
+```
+
+### The `limits` object
+
+`limits` defines the caps themselves. All three fields are optional. If you provide multiple `limits`, the first one crossed triggers the `on_exceed` action.
+
+```json title="agent.json" {5-9}
+{
+  // ...
+  "budget": {
+    "scope": "thread",
+    "limits": {
+      "max_tokens": 100000,
+      "max_cost_usd": 2.50,
+      "max_steps": 40
+    },
+    "on_exceed": "pause",
+    "reset": "monthly",
+    "notify": "https://example.com/webhooks/budget-alerts"
+  }
+  // ...
+}
+```
+
+- **`max_tokens`** (integer) — the maximum total token count, input and output combined, for the budget's scope.
+- **`max_cost_usd`** (number) — the maximum total spend, in USD, for the budget's scope.
+- **`max_steps`** (integer) — the maximum number of agent steps (tool calls and model turns) for the budget's scope.
+
+### The `on_exceed` key
+
+`on_exceed` determines what happens when the run crosses a limit. It's optional. If you don't provide a value, it defaults to `warn`.
+
+```json title="agent.json" {10}
+{
+  // ...
+  "budget": {
+    "scope": "thread",
+    "limits": {
+      "max_tokens": 100000,
+      "max_cost_usd": 2.50,
+      "max_steps": 40
+    },
+    "on_exceed": "pause",
+    "reset": "monthly",
+    "notify": "https://example.com/webhooks/budget-alerts"
+  }
+  // ...
+}
+```
+
+| Value | Behavior |
+|-------|----------|
+| `warn` | This is the default. The run continues unaffected. Agent Server logs and surfaces the breach, and `notify` still fires. |
+| `pause` | The run halts and requires resume, either manually or programmatically — similar to a human-in-the-loop interrupt. |
+| `halt` | The run finishes its current step, then stops cleanly, preserving partial state. |
+
+### The `reset` key
+
+`reset` controls whether a budget's usage counter clears on a schedule. `thread`- and `deployment`-scoped budgets must include it. A `run`-scoped budget covers a single invocation, so there's nothing to reset, and `reset` doesn't apply.
+
+| Value | When it resets |
+|-------|-----------------|
+| `daily` | At the start of each day (UTC) |
+| `monthly` | On the first of each month |
+| `never` | Usage accumulates for the life of the thread or deployment |
+
+```json title="agent.json" {11}
+{
+  // ...
+  "budget": {
+    "scope": "thread",
+    "limits": {
+      "max_tokens": 100000,
+      "max_cost_usd": 2.50,
+      "max_steps": 40
+    },
+    "on_exceed": "pause",
+    "reset": "monthly",
+    "notify": "https://example.com/webhooks/budget-alerts"
+  }
+  // ...
+}
+```
+
+### The `notify` key
+
+`notify` takes a webhook URL that LangChain calls when a budget trips. It's optional.
+
+```json title="agent.json" {12}
+{
+  // ...
+  "budget": {
+    "scope": "thread",
+    "limits": {
+      "max_tokens": 100000,
+      "max_cost_usd": 2.50,
+      "max_steps": 40
+    },
+    "on_exceed": "pause",
+    "reset": "monthly",
+    "notify": "https://example.com/webhooks/budget-alerts"
+  }
+  // ...
+}
+```
+
+## Full example
+
+This budget tracks every run on a thread. Once the thread crosses a limit, Agent Server pauses the run in progress and calls the webhook. The thread's spend counter resets on the first of the next month. The thread can resume, manually or programmatically, once someone has reviewed why it hit the cap.
+
+## Deployment process
+
+Adding or changing the `budget` block in `agent.json` doesn't take effect on its own — deploy or restart your Agent Server application afterward. Use [`langgraph dev`](https://docs.langchain.com/langsmith/local-dev-testing) for local development, or [`langgraph up`](https://docs.langchain.com/langsmith/local-dev-testing) to rebuild a Docker-based deployment.
+
+For every other configurable key in `agent.json`, see the [LangGraph CLI reference](https://docs.langchain.com/langsmith/cli#configuration-file).
+
+## What's next
+
+- **[Cost tracking](https://docs.langchain.com/langsmith/cost-tracking)** — Set up model pricing so `max_cost_usd` reflects real spend.
+- **[Agent Server](https://docs.langchain.com/langsmith/agent-server)** — See where budgets fit in the wider Agent Server concept map.
