@@ -162,8 +162,3 @@ This budget tracks every run on a thread. Once the thread crosses a limit, Agent
 Adding or changing the `budget` block in `agent.json` doesn't take effect on its own — deploy or restart your Agent Server application afterward. Use [`langgraph dev`](https://docs.langchain.com/langsmith/local-dev-testing) for local development, or [`langgraph up`](https://docs.langchain.com/langsmith/local-dev-testing) to rebuild a Docker-based deployment.
 
 For every other configurable key in `agent.json`, see the [LangGraph CLI reference](https://docs.langchain.com/langsmith/cli#configuration-file).
-
-## What's next
-
-- **[Cost tracking](https://docs.langchain.com/langsmith/cost-tracking)** — Set up model pricing so `max_cost_usd` reflects real spend.
-- **[Agent Server](https://docs.langchain.com/langsmith/agent-server)** — See where budgets fit in the wider Agent Server concept map.
