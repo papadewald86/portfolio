@@ -40,10 +40,7 @@ const config: Config = {
     [
       'classic',
       {
-        docs: {
-          sidebarPath: './sidebars.ts',
-          routeBasePath: 'docs',
-        },
+        docs: false,
         blog: false,
         theme: {
           customCss: './src/css/custom.css',
