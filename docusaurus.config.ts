@@ -91,17 +91,6 @@ const config: Config = {
           position: 'left',
         },
         {
-          to: '/job-search-agent',
-          label: 'Projects',
-          position: 'left',
-        },
-        {
-          type: 'docSidebar',
-          sidebarId: 'portfolioSidebar',
-          position: 'left',
-          label: 'Documentation Samples',
-        },
-        {
           href: 'https://github.com/papadewald86',
           label: 'GitHub',
           position: 'right',
